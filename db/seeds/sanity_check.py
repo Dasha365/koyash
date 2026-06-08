@@ -1,12 +1,4 @@
-# PHASE 5 — read-only sanity checks for the koyash database.
-#
-# This script does NOT write or change anything — it only reads back the
-# data that import_products.py / import_examples.py already loaded, and
-# checks it against the "Sanity checks to pass" list at the end of
-# db/docs/KOYASH_data_transformation_plan.md (section G).
-#
-# Run it any time you want to confirm the data still looks right, e.g.
-# after re-running an import script or attaching the validator.
+# Read-only sanity checks for the koyash database.
 
 import os
 import sys
