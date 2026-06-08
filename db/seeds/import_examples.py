@@ -1,15 +1,4 @@
-# PHASE 3 — import the "Koyash" sheet into MongoDB as the `consultations` collection.
-#
-# This follows db/docs/KOYASH_data_transformation_plan.md section C exactly.
-# Note from the plan: this collection is reference/seed data only —
-# "the rule engine never queries this collection."
-#
-# Steps (mirrors Phase 2's import_products.py):
-#   1. Connect to Atlas.
-#   2. Read every row of the "Koyash" sheet from Koyash.xlsx.
-#   3. Build one document per row: COPY fields unchanged, CONVERT fields to
-#      the right type/vocabulary, DERIVE the array fields and total_price_rub.
-#   4. Upsert by _id = consultation_id — safe to re-run, never duplicates.
+# Import the "Koyash" sheet into MongoDB as the `consultations` collection.
 
 import os
 import re
@@ -24,9 +13,6 @@ DB_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(dotenv_path=DB_DIR / ".env")
 sys.stdout.reconfigure(encoding="utf-8")
 
-# ---------------------------------------------------------------------------
-# Lookup table for the budget CONVERT (plan section C, row 5)
-# ---------------------------------------------------------------------------
 BUDGET_MAP = {"low": "low", "medium": "mid", "high": "high"}
 
 NUMBER = re.compile(r"-?\d+(?:\.\d+)?")
@@ -63,28 +49,16 @@ def normalize_allergies(value):
         return None
     return text
 
-
-# cons_027's age cell holds '27 (беременность)' = '27 (pregnancy)' instead of
-# a plain number. Per Daria's call (2026-06-08): store the number (27) in
-# `age` via to_number() above, and keep the pregnancy note by appending it to
-# that one record's `warning_notes` — already a free-text usage-caution field
-# in the plan (C row 12), so nothing new is invented.
 EXTRA_WARNING_NOTES = {
     "cons_027": "Возраст в анкете указан как «27 (беременность)».",
 }
 
-# ---------------------------------------------------------------------------
-# Connect
-# ---------------------------------------------------------------------------
 uri = os.getenv("MONGODB_URI")
 db_name = os.getenv("DB_NAME")
 client = MongoClient(uri, serverSelectionTimeoutMS=5000)
 db = client[db_name]
 consultations = db["consultations"]
 
-# ---------------------------------------------------------------------------
-# Read the sheet
-# ---------------------------------------------------------------------------
 xlsx_path = DB_DIR / "data" / "Koyash.xlsx"
 workbook = openpyxl.load_workbook(xlsx_path, data_only=True)
 sheet = workbook["Koyash"]
