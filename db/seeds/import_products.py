@@ -1,15 +1,4 @@
-# PHASE 2 — import the "Products" sheet into MongoDB as the `products` collection.
-#
-# This follows db/docs/KOYASH_data_transformation_plan.md sections B and D exactly.
-# Steps:
-#   1. Connect to Atlas (same .env-based connection as Phase 1).
-#   2. Read every row of the "Products" sheet from Koyash.xlsx.
-#   3. Build one MongoDB document per row: COPY fields unchanged, CONVERT fields
-#      to the right type/vocabulary, and DERIVE the new routine fields.
-#   4. Upsert each document with _id = product_id, so re-running this script
-#      never creates duplicates — it just refreshes the same 69 documents.
-#   5. Print every product whose routine_step came out as "needs_review" so
-#      you can check the category -> step mapping by hand.
+# Import the "Products" sheet into MongoDB as the `products` collection.
 
 import os
 import re
@@ -26,9 +15,6 @@ load_dotenv(dotenv_path=DB_DIR / ".env")
 # Make Cyrillic print correctly even if the terminal is in a Windows codepage.
 sys.stdout.reconfigure(encoding="utf-8")
 
-# ---------------------------------------------------------------------------
-# Lookup tables for the CONVERT columns (plan section B, rows 5 / 13 / 14)
-# ---------------------------------------------------------------------------
 SEGMENT_MAP = {"бюджет": "low", "мидл": "mid", "люкс": "high"}
 VEGAN_MAP = {"Да": True, "Нет": False}
 CRUELTY_FREE_MAP = {"Да": "yes", "Нет": "no", "Неизвестно": "unknown"}
@@ -48,10 +34,6 @@ def to_number(value):
     return None
 
 
-# ---------------------------------------------------------------------------
-# routine_step / tier / order_index — plan section D.
-# Case-insensitive substring match on category_raw; first matching rule wins.
-# ---------------------------------------------------------------------------
 def derive_routine_step(category_raw):
     text = (category_raw or "").lower()
 
@@ -88,12 +70,6 @@ def derive_routine_step(category_raw):
     return "needs_review", "occasional", None                    # rule 9
 
 
-# Hand classifications for the two products that legitimately landed in
-# needs_review after the first import (Daria, 2026-06-08) — applied AFTER
-# the rule-based derivation above, as explicit _id-scoped exceptions. This
-# is the "edit by hand, re-run, done" path the plan describes in section F:
-# the matching rules in derive_routine_step stay exactly as specified, and
-# only these two specific products get a manual final answer.
 #   - product_008 'Увлажняющий гель для умывания': category_raw alone
 #     ('Увлажняющий гель') is too generic to match any rule, but the
 #     product's own name says "для умывания" (= "for washing") — it's a
