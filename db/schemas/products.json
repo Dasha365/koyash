@@ -7,7 +7,8 @@
       "ingredients_raw", "main_actives", "functional_category", "pH",
       "allergens_raw", "vegan", "cruelty_free", "format", "volume_ml",
       "price_per_ml", "issues", "skintype", "status",
-      "routine_step", "tier", "order_index", "allergens_norm"
+      "routine_step", "tier", "order_index", "allergens_norm",
+      "concerns_addressed"
     ],
     "properties": {
       "_id": {
@@ -83,6 +84,13 @@
         "bsonType": "array",
         "items": { "bsonType": "string" },
         "description": "provisional tokenized allergen list for exclusion filtering (plan A-4, B-51)"
+      },
+      "concerns_addressed": {
+        "bsonType": "array",
+        "items": {
+          "enum": ["acne", "oiliness", "pigmentation", "aging", "dryness", "sensitivity"]
+        },
+        "description": "derived from functional_category keyword match — soft signal, never a hard filter (spec H)"
       }
     }
   }
