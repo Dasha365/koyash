@@ -4,6 +4,12 @@ MongoDB layer for the KOYASH recommendation app: connection test, import
 scripts, JSON-schema validators, and sanity checks. See
 `docs/KOYASH_data_transformation_plan.md` for the full data spec.
 
+## Setup
+
+```bash
+pip install -r db/requirements.txt
+```
+
 ## Source data
 
 `db/data/Koyash.xlsx` (the `Products` and `Koyash`/consultations sheets) was
