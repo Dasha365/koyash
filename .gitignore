@@ -17,6 +17,9 @@ __pycache__/
 venv/
 backend/.venv/
 
+# Customer-provided dataset — not ours to redistribute, see db/README.md
+db/data/Koyash.xlsx
+
 # macOS
 .DS_Store
 
