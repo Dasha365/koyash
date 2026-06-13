@@ -15,4 +15,9 @@ This directory contains all documentation and reports for week 2 of the project.
 - **images/** - Supporting images and diagrams
 
 ## Status
-[Update with current status]
+
+- **MVP v0** is implemented and deployed — see
+  [mvp-v0-report.md](mvp-v0-report.md) for the deployment URL, demo video,
+  and a repeatable smoke-check scenario.
+- The remaining reports in this directory (user stories, analysis, LLM
+  report, customer meeting notes) are in progress.

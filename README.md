@@ -55,6 +55,7 @@ source dataset, JSON-schema validators, sanity checks) — see
 
 - [db/README.md](db/README.md) — data layer: imports, validators, sanity checks, dataset handling.
 - [db/docs/KOYASH_data_transformation_plan.md](db/docs/KOYASH_data_transformation_plan.md) — spec for transforming the source Excel data into MongoDB.
+- [reports/week2/README.md](reports/week2/README.md) — week 2 reports index.
 - [reports/week2/mvp-v0-report.md](reports/week2/mvp-v0-report.md) — MVP v0 report.
 - `docs/` — general project documentation (currently empty).
 - `frontend/` — frontend app (currently empty).

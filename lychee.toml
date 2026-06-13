@@ -20,7 +20,7 @@ exclude = [
   # get a real response. Manually verified on 2026-06-13 that the video plays
   # normally in a browser.
   # Affects: README.md "Deployment" section and
-  # reports/week2/mvp-v0-report.md "Ссылка на публичное видео"
+  # reports/week2/mvp-v0-report.md "Public video demonstration link"
   # (https://youtu.be/ftTVnoXQvI8).
   '^https://youtu\.be/',
 ]
