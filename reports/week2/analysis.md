@@ -12,7 +12,6 @@
 
 - **Photos are not needed; icons work — confirmed.** The assumption that product photos add value was rejected: photo quality across ~70 products is inconsistent, and the customer endorsed category icons. US-10 stays Could Have.
 - **Landing page is not required for the first working version — confirmed.** This rejected our initial scope assumption and led to dropping US-01 from the MVP v1 scope.
-- **Skin-type handling — revised, not deferred.** We assumed the empty `skintype` data forced US-09 down to Should Have. After the customer offered that the team could fill the markup, we took ownership of it and kept US-09 as Must Have.
 - **Logo direction — confirmed.** The handwriting-based logo got a strong positive reaction and was selected; the team-designed wordmark was dropped.
 
 ## Needs clarification
@@ -24,10 +23,10 @@
 
 ## Planned response
 
-- **Story edits applied.** Some user stories reworded; US-09 kept Must with team-owned skin-type markup.
-- **MVP v1 scope trimmed.** Scope is US-02–US-08 (questionnaire → controlled budget → ordered, justified bag from the real catalog).
+- **Story edits applied.** Several user stories reworded — see [US-02](user-stories.md#us-02-complete-a-step-by-step-questionnaire-in-a-storytelling-format), [US-03](user-stories.md#us-03-enter-budget-through-a-controlled-input), [US-04](user-stories.md#us-04-receive-a-personal-cosmetic-bag-with-real-products), [US-05](user-stories.md#us-05-see-a-clear-justification-for-every-recommended-product), and [US-07](user-stories.md#us-07-express-my-ethical-principles-and-values); [US-09](user-stories.md#us-09-account-for-my-skin-type) moved to Should Have, with team-owned skin-type markup keeping it deliverable.
+- **MVP v1 scope trimmed.** Scope is [US-02–US-08](user-stories.md#initial-proposed-mvp-v1-scope) (questionnaire → controlled budget → ordered, justified bag from the real catalog).
 - **Prioritization for Assignment 3.** Adopt a task tracker used daily, and apply ICE / RICE at the task level when the scope is estimated and finalized.
-- **Skin-type markup scheduled** as a parallel team task so US-09 remains deliverable (US-09).
-- **Resolve technical seams before building MVP v1:** deployment architecture, the backend↔frontend API contract, and the per-product reasoning format.
-- **Design review.** Send the redesigned prototype to the customer.
+- **Skin-type markup scheduled** as a parallel team task so [US-09](user-stories.md#us-09-account-for-my-skin-type) remains deliverable despite moving to Should Have.
+- **Resolve technical seams before building MVP v1:** deployment architecture, the backend↔frontend API contract, and the per-product reasoning format ([US-05](user-stories.md#us-05-see-a-clear-justification-for-every-recommended-product)).
+- **Design review.** Send the redesigned prototype to the customer ([Figma prototype](https://www.figma.com/design/oaSIM2azCmAmEcFY6MZWq9/KOYASH-team-11-prototype?node-id=0-1&t=TtDNm8oalI0rfTHt-1)).
 - **Book a customer slot** to obtain final approval of the updated stories, scope, and design.

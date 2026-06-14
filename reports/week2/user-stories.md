@@ -1,5 +1,7 @@
 # User Stories
 
+**Priority scope:** MoSCoW priorities reflect priority across the whole course product. The small subset selected to build first is listed under *Initial proposed MVP v1 scope*; post-MVP stories keep their product-level priority and are flagged as post-MVP in their notes.
+
 ## Personas
  
 - **Overwhelmed chooser** — primary audience (women ~22–35, mid-to-high income) who value science and evidence, are tired of marketing promises, and want a trustworthy expert. Suffers from information overload and fear of choosing wrong.
@@ -84,7 +86,7 @@ so that I can make an informed decision and trust the service's expertise, witho
  
 ### Notes and constraints
  
-The justification is mandatory — it is the core value of the product; a bag without per-product reasoning is not acceptable. In MVP the reasoning is structural, built from dataset fields; richer LLM-based reasoning comes later. 
+The justification is mandatory — it is the core value of the product; a bag without per-product reasoning is not acceptable. The justification must reference the user's own profile — e.g. "suits your dry skin and your budget," not a generic "this is a good cream." In MVP the reasoning is structural, built from dataset fields; richer LLM-based reasoning comes later (US-14).
  
 ---
  
@@ -140,7 +142,7 @@ Strict exclusion. Backed by the `allergens` field.
  
 **Requirement Status:** Active
 
-**MoSCoW priority:** Must Have
+**MoSCoW priority:** Should Have
  
 As a problem-solver,
 I want my skin type to be taken into account during selection,
@@ -148,7 +150,7 @@ so that products fit how my skin actually behaves.
  
 ### Notes and constraints
  
-Now `skintype` is empty across all 69 products. At the meeting the customer offered that the team could fill in the markup. 
+`skintype` is empty across all 69 products. The customer confirmed US-09 stays Should Have until the `skintype` markup is completed; the team may populate it. Not part of the initial proposed MVP v1 scope.
  
 ---
  
@@ -200,19 +202,19 @@ Post-MVP. A real database is kept already in MVP, but history and personal-accou
  
 ---
  
-## US-13: Track my skin's reaction over time
- 
+## US-13: Leave "worked / didn't work" feedback on products
+
 **Requirement Status:** Active
 
 **MoSCoW priority:** Should Have
- 
+
 As a returning user,
-I want to record how my skin reacted after using the products,
-so that I can see progress and judge whether the routine works.
- 
+I want to mark whether the recommended products worked or did not work for me,
+so that my next cosmetic bag is improved based on that feedback.
+
 ### Notes and constraints
- 
-Post-MVP. 
+
+Reworded after customer review. ТЗ 7.4 forbids progress mechanics, counters, and streaks (to avoid a "duolingo trap"), so this is lightweight "worked / didn't work" feedback that improves the next recommendation — not a progress dashboard. Post-MVP.
  
 ---
  
