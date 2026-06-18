@@ -1,6 +1,6 @@
 name: Other PBI
 description: Technical task, spike, infrastructure, etc.
-title: ""
+title: Other PBI
 labels: ["other-pbi"]
 body:
   - type: dropdown
