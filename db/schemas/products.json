@@ -91,6 +91,11 @@
           "enum": ["acne", "oiliness", "pigmentation", "aging", "dryness", "sensitivity"]
         },
         "description": "derived from functional_category keyword match — soft signal, never a hard filter (spec H)"
+      },
+      "main_actives_short": {
+        "bsonType": "array",
+        "items": { "bsonType": "string" },
+        "description": "derived from main_actives: split by comma, take part before first '(', strip whitespace; all names stored, backend picks first 2-3 for justification (spec §12)"
       }
     }
   }
