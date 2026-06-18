@@ -87,14 +87,56 @@ MANUAL_ROUTINE_STEP_OVERRIDES = {
 # Provisional list for exclusion (plan A.4) — not authoritative, used with care.
 # ---------------------------------------------------------------------------
 PARENTHETICAL = re.compile(r"\([^)]*\)")
+_CYRILLIC = re.compile(r"[Ѐ-ӿ]")
+
+# "Parfum" is the INCI name for fragrance blend — identical allergen risk as
+# "Fragrance". Map to one canonical token so a single filter catches both.
+_ALLERGEN_ALIASES: dict[str, str] = {
+    "parfum": "Fragrance",
+}
 
 
-def derive_allergens_norm(allergens_raw):
+def _clean_token(token: str) -> str:
+    """Return a cleaned ingredient token, or '' if the token is a note, not an ingredient.
+
+    Handles two noise patterns found in allergens_raw:
+    - Pure-Cyrillic tokens: prose notes like "нет парабенов" — discarded entirely.
+    - Latin name + Cyrillic tail: "Fragrance не обнаружено" — Cyrillic part stripped.
+    """
+    if not token:
+        return ""
+    if not token[0].isascii():
+        return ""
+    m = _CYRILLIC.search(token)
+    if m:
+        token = token[: m.start()].strip()
+    return token
+
+
+def derive_allergens_norm(allergens_raw: str) -> list[str]:
     if not allergens_raw:
         return []
+    # Strip parenthetical notes: "(fragrance blend)" etc.
     without_notes = PARENTHETICAL.sub("", allergens_raw)
-    pieces = [piece.strip() for piece in without_notes.split(",")]
-    return [p for p in pieces if p]
+    # Split on comma, then split each piece on " + " to atomize compound entries
+    # like "Benzoic Acid + Dehydroacetic Acid". Note: "AHA+BHA" (no spaces) is
+    # intentionally kept as one token — it's a category label, not two compounds.
+    atoms: list[str] = []
+    for piece in without_notes.split(","):
+        atoms.extend(part.strip() for part in piece.split(" + "))
+    # Clean, apply aliases, deduplicate (preserve first-seen order).
+    seen: set[str] = set()
+    result: list[str] = []
+    for atom in atoms:
+        cleaned = _clean_token(atom)
+        if not cleaned:
+            continue
+        canonical = _ALLERGEN_ALIASES.get(cleaned.lower(), cleaned)
+        key = canonical.lower()
+        if key not in seen:
+            seen.add(key)
+            result.append(canonical)
+    return result
 
 
 # ---------------------------------------------------------------------------
