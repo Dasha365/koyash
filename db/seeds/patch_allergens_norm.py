@@ -20,21 +20,36 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------------------
 PARENTHETICAL = re.compile(r"\([^)]*\)")
 _CYRILLIC = re.compile(r"[Ѐ-ӿ]")
+_LEADING_DECORATION = re.compile(r"^[^\w]+")
+_SPECIFIC_ABSENCE = re.compile(
+    r"^[A-Za-z][A-Za-z0-9/+\- ]*\s+(отсутству(?:ет|ют)|не\s+обнаружен\w*|не\s+содержится)\s*$",
+)
+_QUALIFIER_PREFIXES = ("только ",)
 
 _ALLERGEN_ALIASES: dict[str, str] = {
     "parfum": "Fragrance",
+    "бензиловый спирт": "Benzyl Alcohol",
+    "парабены": "Paraben",
+    "пропиленгликоль": "Propylene Glycol",
+    "диethylamino hydroxybenzoyl hexyl benzoate": "Diethylamino Hydroxybenzoyl Hexyl Benzoate",
 }
 
 
+def _strip_qualifier_prefix(token: str) -> str:
+    lowered = token.lower()
+    for prefix in _QUALIFIER_PREFIXES:
+        if lowered.startswith(prefix):
+            return token[len(prefix):].strip()
+    return token
+
+
 def _clean_token(token: str) -> str:
-    if not token:
-        return ""
     if not token[0].isascii():
         return ""
     m = _CYRILLIC.search(token)
     if m:
         token = token[: m.start()].strip()
-    return token
+    return token.rstrip(" —-")
 
 
 def derive_allergens_norm(allergens_raw: str) -> list[str]:
@@ -47,10 +62,20 @@ def derive_allergens_norm(allergens_raw: str) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
     for atom in atoms:
-        cleaned = _clean_token(atom)
-        if not cleaned:
+        atom = _LEADING_DECORATION.sub("", atom).strip()
+        if not atom or _SPECIFIC_ABSENCE.match(atom):
             continue
-        canonical = _ALLERGEN_ALIASES.get(cleaned.lower(), cleaned)
+        atom = _strip_qualifier_prefix(atom)
+        if not atom:
+            continue
+        alias_key = atom.lower()
+        if alias_key in _ALLERGEN_ALIASES:
+            canonical = _ALLERGEN_ALIASES[alias_key]
+        else:
+            cleaned = _clean_token(atom)
+            if not cleaned:
+                continue
+            canonical = _ALLERGEN_ALIASES.get(cleaned.lower(), cleaned)
         key = canonical.lower()
         if key not in seen:
             seen.add(key)

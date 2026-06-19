@@ -88,29 +88,61 @@ MANUAL_ROUTINE_STEP_OVERRIDES = {
 # ---------------------------------------------------------------------------
 PARENTHETICAL = re.compile(r"\([^)]*\)")
 _CYRILLIC = re.compile(r"[Ѐ-ӿ]")
+# Leading non-word "decoration" (emoji/markers like "🚨 "/"❌ " used as internal
+# QA flags) — strip before any other check so the real name underneath is seen.
+_LEADING_DECORATION = re.compile(r"^[^\w]+")
+# "<Latin name> отсутствует/отсутствуют/не обнаружен(о)/не содержится" with
+# NOTHING else trailing means the source is explicitly saying that ingredient
+# is ABSENT — e.g. "Fragrance отсутствует", "Paraben отсутствуют". The whole
+# atom must be discarded, not kept as if the ingredient were present.
+# Anchored at both ends so it does NOT fire on a general statement merged into
+# the same atom via a dash, e.g. "Mannitol/Xylitol — отсутствуют типичные
+# раздражители" (negates "typical irritants", not Mannitol/Xylitol itself).
+_SPECIFIC_ABSENCE = re.compile(
+    r"^[A-Za-z][A-Za-z0-9/+\- ]*\s+(отсутству(?:ет|ют)|не\s+обнаружен\w*|не\s+содержится)\s*$",
+)
+# Cyrillic qualifier words that precede a real (kept) ingredient name rather
+# than negating it, e.g. "только Fragrance" = "only Fragrance" (Fragrance IS
+# present, "только" just says it's the sole one) — strip the qualifier, keep
+# what follows.
+_QUALIFIER_PREFIXES = ("только ",)
 
 # "Parfum" is the INCI name for fragrance blend — identical allergen risk as
 # "Fragrance". Map to one canonical token so a single filter catches both.
+# The Russian/mixed-script entries map onto an English token already used
+# elsewhere in the dataset, recovering allergen mentions that would otherwise
+# be silently dropped as "just a Cyrillic note".
 _ALLERGEN_ALIASES: dict[str, str] = {
     "parfum": "Fragrance",
+    "бензиловый спирт": "Benzyl Alcohol",
+    "парабены": "Paraben",
+    "пропиленгликоль": "Propylene Glycol",
+    "диethylamino hydroxybenzoyl hexyl benzoate": "Diethylamino Hydroxybenzoyl Hexyl Benzoate",
 }
+
+
+def _strip_qualifier_prefix(token: str) -> str:
+    lowered = token.lower()
+    for prefix in _QUALIFIER_PREFIXES:
+        if lowered.startswith(prefix):
+            return token[len(prefix):].strip()
+    return token
 
 
 def _clean_token(token: str) -> str:
     """Return a cleaned ingredient token, or '' if the token is a note, not an ingredient.
 
     Handles two noise patterns found in allergens_raw:
-    - Pure-Cyrillic tokens: prose notes like "нет парабенов" — discarded entirely.
-    - Latin name + Cyrillic tail: "Fragrance не обнаружено" — Cyrillic part stripped.
+    - Pure-Cyrillic tokens: prose notes like "много кислот" — discarded entirely.
+    - Latin name + Cyrillic tail: "Fragrance (неизвестный потенциал)" already lost
+      its parenthetical upstream; this strips any other trailing Cyrillic prose.
     """
-    if not token:
-        return ""
     if not token[0].isascii():
         return ""
     m = _CYRILLIC.search(token)
     if m:
         token = token[: m.start()].strip()
-    return token
+    return token.rstrip(" —-")
 
 
 def derive_allergens_norm(allergens_raw: str) -> list[str]:
@@ -128,10 +160,24 @@ def derive_allergens_norm(allergens_raw: str) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
     for atom in atoms:
-        cleaned = _clean_token(atom)
-        if not cleaned:
+        atom = _LEADING_DECORATION.sub("", atom).strip()
+        if not atom or _SPECIFIC_ABSENCE.match(atom):
             continue
-        canonical = _ALLERGEN_ALIASES.get(cleaned.lower(), cleaned)
+        atom = _strip_qualifier_prefix(atom)
+        if not atom:
+            continue
+        # Alias lookup runs BEFORE the ascii-only gate in _clean_token, so a
+        # Russian-only or mixed-script name with a known English equivalent
+        # ("Парабены" -> "Paraben") is rescued instead of being treated as a
+        # discardable note just because it doesn't start with a Latin letter.
+        alias_key = atom.lower()
+        if alias_key in _ALLERGEN_ALIASES:
+            canonical = _ALLERGEN_ALIASES[alias_key]
+        else:
+            cleaned = _clean_token(atom)
+            if not cleaned:
+                continue
+            canonical = _ALLERGEN_ALIASES.get(cleaned.lower(), cleaned)
         key = canonical.lower()
         if key not in seen:
             seen.add(key)
