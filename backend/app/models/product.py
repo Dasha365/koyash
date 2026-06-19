@@ -62,10 +62,9 @@ class BagItem(BaseModel):
 
 class RecommendMeta(BaseModel):
     total_price_rub: float
-    budget_range: list[Optional[float]]  # [lo, hi] — hi=null means no upper limit
     budget: str
     note: Optional[str] = None
-    empty_steps: list[str] = []  # steps skipped due to no candidates or budget constraints
+    empty_steps: list[str] = []  # core steps with zero candidates in any segment
 
 
 class RecommendResponse(BaseModel):
