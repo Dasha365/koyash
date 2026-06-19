@@ -29,7 +29,7 @@ const rightOptions = [
   'Ничего конкретного — просто хочу базовый уход',
 ];
 
-export default function App() {
+export default function QuizScreen2({ onNext, onBack }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleOptionChange = (option) => {
@@ -86,10 +86,10 @@ export default function App() {
         <div className="optionsLeft">{leftOptions.map(renderOption)}</div>
         <div className="optionsRight">{rightOptions.map(renderOption)}</div>
 
-        <button className="button buttonBack" type="button">
+        <button className="button buttonBack" type="button" onClick={onBack}>
           Назад
         </button>
-        <button className="button buttonNext" type="button">
+        <button className="button buttonNext" type="button" onClick={onNext}>
           Дальше →
         </button>
         <img className="decorCloud" src={decorCloud} alt="" aria-hidden="true" />
