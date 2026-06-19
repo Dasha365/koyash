@@ -1,0 +1,28 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 40px;
+  text-align: center;
+  font-family: 'Manrope', Arial, sans-serif;
+  color: #3a2e28;
+  background: #fdf8f3;
+}
+
+.landing h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.landing__cta {
+  margin-top: 24px;
+  padding: 14px 28px;
+  background: #c17f3e;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+} 
