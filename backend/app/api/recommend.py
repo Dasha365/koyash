@@ -2,6 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 
+from app.core.active_translations import translate_active
 from app.core.database import get_database
 from app.models.product import (
     BagItem,
@@ -84,7 +85,7 @@ def _to_out(p: Product) -> ProductOut:
         order_index=p.order_index,
         frequency=STEP_FREQUENCY.get(p.routine_step, "По необходимости"),
         concerns_addressed=p.concerns_addressed,
-        main_actives_short=p.main_actives_short,
+        main_actives_short=[translate_active(a) for a in p.main_actives_short],
     )
 
 
@@ -111,7 +112,7 @@ def _build_justification(
             what_it_does.append(phrase)
     what_it_does = what_it_does[:3]
 
-    key_actives = p.main_actives_short[:3]
+    key_actives = [translate_active(a) for a in p.main_actives_short[:3]]
 
     why: list[str] = []
     for concern in p.concerns_addressed:
@@ -120,7 +121,7 @@ def _build_justification(
     if req_vegan and p.vegan:
         why.append("Подходит для веганов")
     if req_cruelty_free and p.cruelty_free == "yes":
-        why.append("Cruelty-free")
+        why.append("Не тестируется на животных")
     if req_has_allergens:
         why.append("Без отмеченных тобой аллергенов")
 
@@ -129,6 +130,7 @@ def _build_justification(
         what_it_does=what_it_does,
         key_actives=key_actives,
         why_for_you=why,
+        summary_ru=". ".join(why) + "." if why else None,
     )
 
 

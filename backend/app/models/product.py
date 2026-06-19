@@ -24,8 +24,9 @@ class Product(BaseModel):
 class Justification(BaseModel):
     role: str               # "Шаг 1 из 5 — Очищение" / "2–3 раза в неделю — Отшелушивание"
     what_it_does: list[str] # first 2–3 phrases from functional_category (before first "(")
-    key_actives: list[str]  # first 2–3 names from main_actives_short
+    key_actives: list[str]  # first 2–3 names from main_actives_short, translated to RU
     why_for_you: list[str]  # concern matches + vegan/CF/allergen flags
+    summary_ru: Optional[str] = None  # why_for_you joined into one ready-to-display RU sentence
 
 
 class ProductOut(BaseModel):

@@ -31,3 +31,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `image_url` (nullable) in `Product` and `ProductOut`.
 - `empty_steps` list in `meta`: core steps with zero candidates in any segment, after hard filters.
 - `db/seeds/patch_image_url.py` — idempotent script for manually patching `image_url` per product ID. Dry-runs when `IMAGE_URLS` dict is empty.
+- `backend/app/core/active_translations.py`: `ACTIVE_NAME_RU` map + `translate_active()`. `main_actives_short` mixes Russian phrasing with raw Latin INCI names depending on how the source row was filled in; `ProductOut.main_actives_short` and `justification.key_actives` are now translated to Russian before leaving the API, since there's no frontend yet to do that transformation.
+- `justification.summary_ru`: `why_for_you` joined into a single ready-to-display Russian sentence, for consumers that want one string instead of a list.
+
+### Fixed
+
+- `justification.why_for_you` no longer contains the English literal `"Cruelty-free"` — now «Не тестируется на животных».
