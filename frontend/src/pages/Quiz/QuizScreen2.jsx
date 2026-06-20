@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import styles from './QuizScreen2.module.css';
+
 import logo from '../../assets/quiz/logo.png';
 import progressLine from '../../assets/quiz/Line 3.png';
 import decorCloud from '../../assets/quiz/decor-spot-cloud.png';
@@ -51,48 +53,60 @@ export default function QuizScreen2({ onNext, onBack }) {
     const isChecked = selectedOptions.includes(option);
 
     return (
-      <label className="option" key={option}>
+      <label className={styles.option} key={option}>
         <input
-          className="optionInput"
+          className={styles.optionInput}
           type="checkbox"
           checked={isChecked}
           onChange={() => handleOptionChange(option)}
         />
-        <span className="customCheckbox" aria-hidden="true" />
-        <span className="optionText">{option}</span>
+        <span className={styles.customCheckbox} aria-hidden="true" />
+        <span className={styles.optionText}>{option}</span>
       </label>
     );
   };
 
   return (
-    <main className="viewport">
-      <section className="screen" aria-label="Анкета Koyash">
-        <img className="logo" src={logo} alt="Koyash" />
+    <main className={styles.viewport}>
+      <section className={styles.screen} aria-label="Анкета Koyash">
+        <img className={styles.logo} src={logo} alt="Koyash" />
 
-        <div className="topLineBase" />
-        <img className="topLineProgress" src={progressLine} alt="" aria-hidden="true" />
-
-        
+        <div className={styles.topLineBase} />
         <img
-          className="sceneProblems"
+          className={styles.topLineProgress}
+          src={progressLine}
+          alt=""
+          aria-hidden="true"
+        />
+
+        <img
+          className={styles.sceneProblems}
           src={sceneProblems}
           alt="Открытая тетрадка с заметками"
         />
 
-        <p className="noteText">{noteText}</p>
-        <p className="bodyText">{text}</p>
-        <h1 className="title">{title}</h1>
+        <p className={styles.noteText}>{noteText}</p>
+        <p className={styles.bodyText}>{text}</p>
+        <h1 className={styles.title}>{title}</h1>
 
-        <div className="optionsLeft">{leftOptions.map(renderOption)}</div>
-        <div className="optionsRight">{rightOptions.map(renderOption)}</div>
+        <div className={styles.optionsLeft}>{leftOptions.map(renderOption)}</div>
+        <div className={styles.optionsRight}>{rightOptions.map(renderOption)}</div>
 
-        <button className="button buttonBack" type="button" onClick={onBack}>
+        <button
+          className={`${styles.button} ${styles.buttonBack}`}
+          type="button"
+          onClick={onBack}
+        >
           Назад
         </button>
-        <button className="button buttonNext" type="button" onClick={onNext}>
+        <button
+          className={`${styles.button} ${styles.buttonNext}`}
+          type="button"
+          onClick={onNext}
+        >
           Дальше →
         </button>
-        <img className="decorCloud" src={decorCloud} alt="" aria-hidden="true" />
+        <img className={styles.decorCloud} src={decorCloud} alt="" aria-hidden="true" />
       </section>
     </main>
   );
