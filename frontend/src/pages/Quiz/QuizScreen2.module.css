@@ -1,27 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Playfair+Display:wght@400&display=swap');
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-}
-
-body {
-  background: #ffffff;
-  color: #634938;
-}
-
 .viewport {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
   background: #ffffff;
-  overflow: auto;
 }
 
 .screen {
@@ -39,9 +23,9 @@ body {
 
 .logo {
   position: absolute;
-  left: 65px;
-  top: 8px;
-  width: 145px;
+  left: 5.078%;
+  top: 1.111%;
+  width: 11.328%;
   height: auto;
   z-index: 4;
   display: block;
@@ -50,9 +34,10 @@ body {
 .topLineBase {
   position: absolute;
   left: 0;
-  top: 116px;
-  width: 1700px;
-  height: 4px;
+  right: 0;
+  top: 16.111%;
+  width: auto;
+  height: 0.556%;
   background: #fdf3ea;
   z-index: 1;
 }
@@ -60,29 +45,31 @@ body {
 .topLineProgress {
   position: absolute;
   left: 0;
-  top: 115px;
-  width: 424px;
-  height: 7px;
+  top: 15.972%;
+  width: 33.125%;
+  height: 0.972%;
   z-index: 4;
   display: block;
-  background: #D7863B;
+  background: #d7863b;
 }
 
 .noteText {
   position: absolute;
-  left: 58px;
-  top: 162px;
-  width: 700px;
-  height: 46px;
+  left: 4.531%;
+  top: 22.5%;
+  width: 54.688%;
+  height: 6.5%;
   margin: 0;
-  padding: 8px 14px 0 14px;
+  padding: 0 1.563%;
   border-radius: 10px;
   background: #f8e1c0;
+  display: flex;
+  align-items: center;
 
   font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  line-height: 27px;
   font-weight: 400;
+  font-size: clamp(11px, 1.563vw, 20px);
+  line-height: 1.35;
   text-align: left;
   color: #634938;
   z-index: 5;
@@ -90,16 +77,15 @@ body {
 
 .bodyText {
   position: absolute;
-  left: 71px;
-  top: 221px;
-  width: 701px;
-  height: 135px;
+  left: 5.547%;
+  top: 31.5%;
+  width: 54.766%;
   margin: 0;
 
   font-family: 'Manrope', sans-serif;
-  font-size: 20px;
-  line-height: 27px;
   font-weight: 400;
+  font-size: clamp(11px, 1.563vw, 20px);
+  line-height: 1.35;
   text-align: left;
   white-space: pre-line;
   color: #634938;
@@ -108,16 +94,15 @@ body {
 
 .title {
   position: absolute;
-  left: 71px;
-  top: 367px;
-  width: 403px;
-  height: 57px;
+  left: 5.547%;
+  top: 50.972%;
+  width: 31.484%;
   margin: 0;
 
   font-family: 'Playfair Display', serif;
-  font-size: 40px;
-  line-height: 57px;
   font-weight: 400;
+  font-size: clamp(20px, 3.125vw, 40px);
+  line-height: 1.425;
   text-align: left;
   color: #634938;
   z-index: 5;
@@ -126,34 +111,33 @@ body {
 .optionsLeft,
 .optionsRight {
   position: absolute;
-  top: 442px;
+  top: 61.389%;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 3.4%;
   z-index: 5;
 }
 
 .optionsLeft {
-  left: 76px;
-  width: 300px;
+  left: 5.938%;
+  width: 23.438%;
 }
 
 .optionsRight {
-  left: 388px;
-  width: 670px;
+  left: 30.312%;
+  width: 52.344%;
 }
 
 .option {
   display: flex;
   align-items: center;
-  height: 25px;
   cursor: pointer;
   user-select: none;
 
   font-family: 'Manrope', sans-serif;
-  font-size: 20px;
-  line-height: 25px;
   font-weight: 400;
+  font-size: clamp(11px, 1.563vw, 20px);
+  line-height: 1.25;
   color: #634938;
 }
 
@@ -164,19 +148,24 @@ body {
 }
 
 .customCheckbox {
-  width: 15px;
-  height: 15px;
-  flex: 0 0 15px;
-  margin-right: 10px;
+  width: 1.953%;
+  aspect-ratio: 1 / 1;
+  min-width: 18px;
+  flex: 0 0 auto;
+  margin-right: 1.1%;
   border: 2px solid #634938;
-  border-radius: 3px;
-  background: transparent;
+  border-radius: 4px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 65%;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .optionInput:checked + .customCheckbox {
   border-color: #e9a563;
-  background: #e9a563;
-  box-shadow: inset 0 0 0 3px #ffffff;
+  background-color: #e9a563;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 12 9 17 20 6'/%3E%3C/svg%3E");
 }
 
 .optionText {
@@ -186,35 +175,34 @@ body {
 
 .button {
   position: absolute;
-  top: 641px;
-  height: 62px;
+  top: 88%;
+  height: 8%;
   border: 0;
   border-radius: 10px;
   background: #e9a563;
 
   font-family: 'Manrope', sans-serif;
-  font-size: 24px;
-  line-height: 32px;
   font-weight: 700;
+  font-size: clamp(12px, 1.875vw, 24px);
+  line-height: 1;
   color: #ffffff;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
   z-index: 6;
 }
 
 .buttonBack {
-  left: 77px;
-  width: 118px;
-  height: 7%;
-  top: 700px;
+  left: 6.016%;
+  width: 9.219%;
 }
 
 .buttonNext {
-  left: 393px;
-  width: 281px;
-  height: 7%;
-  top: 700px;
+  left: 30.703%;
+  width: 21.953%;
 }
 
 .button:hover {
@@ -227,22 +215,33 @@ body {
 
 .decorCloud {
   position: absolute;
-  right: -100px;
-  top: 100px;
-  width: 800px;
+  right: -7.812%;
+  top: 13.889%;
+  width: 62.5%;
   height: auto;
   opacity: 0.35;
   z-index: 1;
   pointer-events: none;
-  transform: translateX(-20px) rotate(180deg);
+  transform: translateX(-1.563%) rotate(180deg);
 }
 
 .sceneProblems {
   position: absolute;
-  left: 900px;
-  top: 200px;
-  width: 556px;
+  left: 58%;
+  top: 27.778%;
+  width: 40%;
   height: auto;
   z-index: 3;
   pointer-events: none;
+}
+
+@media (max-aspect-ratio: 4 / 3) {
+  .viewport {
+    overflow: auto;
+  }
+
+  .screen {
+    min-width: 900px;
+    min-height: 506px;
+  }
 }
