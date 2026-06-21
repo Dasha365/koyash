@@ -12,10 +12,12 @@ moisturize → spf, plus occasional treatments such as exfoliants and masks).
 their own and want a skincare routine that fits their budget and
 constraints (allergies, vegan/cruelty-free preferences).
 
-**Current status:** MVP v0 — a FastAPI backend with rule-based filtering on
+**Current status:** MVP v1 — a FastAPI backend with rule-based filtering on
 top of MongoDB Atlas (`GET /products`, `POST /recommend`) and a React +
-Vite frontend (questionnaire and results screens) wired to the backend.
-LLM-based recommendations and authentication are planned.
+Vite frontend (questionnaire and results screens), deployed and wired
+end-to-end. LLM-based recommendations, skin-type personalization, and
+authentication are planned for later Sprints — see
+[docs/roadmap.md](docs/roadmap.md).
 
 ## Running locally
 
@@ -58,14 +60,16 @@ source dataset, JSON-schema validators, sanity checks) — see
 - [db/docs/KOYASH_data_transformation_plan.md](db/docs/KOYASH_data_transformation_plan.md) — spec for transforming the source Excel data into MongoDB.
 - [reports/week2/README.md](reports/week2/README.md) — week 2 reports index.
 - [reports/week2/mvp-v0-report.md](reports/week2/mvp-v0-report.md) — MVP v0 report.
-- `docs/` — general project documentation (currently empty).
+- [docs/user-stories.md](docs/user-stories.md) — current user-story index.
+- [docs/roadmap.md](docs/roadmap.md) — Sprint-by-Sprint roadmap.
+- [docs/definition-of-done.md](docs/definition-of-done.md) — team Definition of Done.
 - `frontend/` — React + Vite frontend: questionnaire and results screens, wired to the backend API.
 
 ## Deployment
 
 - API + Swagger docs: <https://koyash-production.up.railway.app/docs>
 - Frontend: <https://koyash-production-25e0.up.railway.app>
-- Demo video: <https://youtu.be/ftTVnoXQvI8>
+- Demo video: <https://youtu.be/SDuBlborKr0>
 
 ## Link checking
 
@@ -81,9 +85,10 @@ A couple of links are narrowly excluded, with justification in
 - `http://localhost:8000/...` (in "Running locally" above and in the
   `reports/week2/mvp-v0-report.md` smoke-check) — local development URLs that
   are never reachable from a CI runner.
-- `https://youtu.be/ftTVnoXQvI8` (demo video, linked above and in
-  `reports/week2/mvp-v0-report.md`) — YouTube blocks automated HTTP clients
-  at the TLS/bot-detection layer, so lychee can never get a real response;
-  manually verified on 2026-06-13 that the video plays normally in a browser.
-
-
+- `https://youtu.be/...` links (the current MVP v1 demo above and the
+  historical MVP v0 demo in `reports/week2/mvp-v0-report.md`) — YouTube blocks
+  automated HTTP clients at the TLS/bot-detection layer, so lychee can never
+  get a real response; the lychee.toml exclusion is a pattern match on any
+  `youtu.be` link, not a single hard-coded URL. Manually verified on
+  2026-06-21 that the current demo (<https://youtu.be/SDuBlborKr0>) plays
+  normally in a browser; the MVP v0 link was verified on 2026-06-13.

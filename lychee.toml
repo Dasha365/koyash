@@ -17,11 +17,13 @@ exclude_loopback = true
 exclude = [
   # YouTube blocks automated HTTP clients (incl. lychee and GitHub-hosted
   # runners) during the TLS handshake / via bot detection, so requests never
-  # get a real response. Manually verified on 2026-06-13 that the video plays
-  # normally in a browser.
-  # Affects: README.md "Deployment" section and
+  # get a real response. Pattern matches any youtu.be link, not a single
+  # hard-coded URL, since the repo links both the current and historical demo.
+  # Affects: README.md "Deployment" section (current MVP v1 demo,
+  # https://youtu.be/SDuBlborKr0, verified 2026-06-21),
+  # reports/week3/README.md (same link), and
   # reports/week2/mvp-v0-report.md "Public video demonstration link"
-  # (https://youtu.be/ftTVnoXQvI8).
+  # (historical MVP v0 demo, https://youtu.be/ftTVnoXQvI8, verified 2026-06-13).
   '^https://youtu\.be/',
 ]
 
