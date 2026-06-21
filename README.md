@@ -13,8 +13,9 @@ their own and want a skincare routine that fits their budget and
 constraints (allergies, vegan/cruelty-free preferences).
 
 **Current status:** MVP v0 — a FastAPI backend with rule-based filtering on
-top of MongoDB Atlas (`GET /products`, `POST /recommend`). LLM-based
-recommendations, authentication, and a frontend are planned.
+top of MongoDB Atlas (`GET /products`, `POST /recommend`) and a React +
+Vite frontend (questionnaire and results screens) wired to the backend.
+LLM-based recommendations and authentication are planned.
 
 ## Running locally
 
@@ -58,11 +59,12 @@ source dataset, JSON-schema validators, sanity checks) — see
 - [reports/week2/README.md](reports/week2/README.md) — week 2 reports index.
 - [reports/week2/mvp-v0-report.md](reports/week2/mvp-v0-report.md) — MVP v0 report.
 - `docs/` — general project documentation (currently empty).
-- `frontend/` — frontend app (currently empty).
+- `frontend/` — React + Vite frontend: questionnaire and results screens, wired to the backend API.
 
 ## Deployment
 
 - API + Swagger docs: <https://koyash-production.up.railway.app/docs>
+- Frontend: <https://koyash-production-25e0.up.railway.app>
 - Demo video: <https://youtu.be/ftTVnoXQvI8>
 
 ## Link checking
