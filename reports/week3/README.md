@@ -69,7 +69,7 @@ in [docs/roadmap.md](../../docs/roadmap.md).
 
 ## 13. PBI types, statuses, priorities, Sprint/MVP tracking, decomposition
 
-Canonical definitions live in `Process_Requirements.md`
+Canonical definitions live in [Process_Requirements.md](../../docs/Process_Requirements.md)
 (Work Status, MoSCoW, Sprint milestone usage) — not restated here. Project-specific
 implementation: `Status` (Todo/Ready/In Progress/Review/Done), `MoSCoW`, `Story Points`,
 and `MVP version` are tracked as custom fields on the ["Koyash Product Backlog"](https://github.com/users/Dasha365/projects/1)
@@ -138,7 +138,7 @@ All 38 issues were filed by Daria (team lead/PO role); the table above reflects
 
 - SemVer release mapped to MVP v1: [v1.0.0](https://github.com/Dasha365/koyash/releases/tag/v1.0.0)
 - [CHANGELOG.md](../../CHANGELOG.md)
-- `Process_Requirements.md` (course-provided reference document; not committed to this repository)
+- [Process_Requirements.md](../../docs/Process_Requirements.md)
 - [docs/roadmap.md](../../docs/roadmap.md)
 - [docs/definition-of-done.md](../../docs/definition-of-done.md)
 - Issue templates: [.github/ISSUE_TEMPLATE/](../../.github/ISSUE_TEMPLATE/) · Extended PR template: [.github/pull_request_template.md](../../.github/pull_request_template.md)
