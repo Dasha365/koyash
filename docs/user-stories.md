@@ -19,3 +19,8 @@
 | US-10 | See a product photo on each card | Could Have | [#14](https://github.com/Dasha365/koyash/issues/14) | Active | To Do | — |
 | US-15 | Pay for premium features / paid expert consultations | Won't Have | [#19](https://github.com/Dasha365/koyash/issues/19) | Active | To Do | — |
 | US-16 | Get product recommendations from a photo of my skin | Won't Have | [#20](https://github.com/Dasha365/koyash/issues/20) | Active | To Do | — |
+| US-18 | Complete a short, non-storytelling version of the questionnaire | Should Have | [#69](https://github.com/Dasha365/koyash/issues/69) | Active | To Do | [Sprint 2](https://github.com/Dasha365/koyash/milestone/2) |
+
+## Change log
+
+- **2026-06-24:** Added US-18 (short questionnaire variant) during Sprint 2 planning — the team decided to offer a faster, non-narrative path through the same questions, alongside the existing storytelling flow (US-02). See [#69](https://github.com/Dasha365/koyash/issues/69).
