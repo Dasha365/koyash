@@ -15,6 +15,7 @@ class Product(BaseModel):
     order_index: Optional[int] = None
     concerns_addressed: list[str] = []
     allergens_norm: list[str] = []
+    skintype: list[str] = []  # tags: normal/dry/oily/combination/sensitive/any (DB field "skintype")
     link: Optional[str] = None
     image_url: Optional[str] = None
     main_actives_short: list[str] = []
@@ -53,6 +54,9 @@ class RecommendRequest(BaseModel):
     cruelty_free: bool = False
     minimalism: bool = False
     allergens: list[str] = Field(default_factory=list)
+    # stated skin type: normal/dry/oily/combination/sensitive. None or "unknown"
+    # means no skin-type preference is applied.
+    skin_type: Optional[str] = None
 
 
 class BagItem(BaseModel):
