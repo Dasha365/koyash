@@ -11,7 +11,7 @@ from a real 69-product catalog. License: [MIT](../../LICENSE).
 
 17 user stories were migrated from [reports/week2/user-stories.md](../week2/user-stories.md)
 into GitHub Issues and indexed in [docs/user-stories.md](../../docs/user-stories.md)
-(issues [#5](https://github.com/Dasha365/koyash/issues/5)–[#21](https://github.com/Dasha365/koyash/issues/21)).
+(issues [#5](https://github.com/Koyash-team/koyash/issues/5)–[#21](https://github.com/Koyash-team/koyash/issues/21)).
 One new story, **US-17** (skin concerns), was added during refinement with the next
 unused stable ID. The Product Backlog was further refined into 35 qualifying PBIs
 (15 qualifying user stories, after excluding the 2 `Won't Have` stories US-15/US-16,
@@ -52,8 +52,8 @@ with per-item justification, deployed and ready for customer review."*
 
 - **Total Product Backlog: 144 SP** recorded across 31 estimated PBIs (15 user stories + 16 supporting PBIs), Modified Fibonacci scale.
 - **Total current Sprint (Sprint 1): 98 SP** recorded (8 user stories = 36 SP, 16 supporting PBIs = 62 SP).
-- [#38](https://github.com/Dasha365/koyash/issues/38) (PBI-107) and [#39](https://github.com/Dasha365/koyash/issues/39) (PBI-108) are intentionally unestimated tracking-parent epics — they were decomposed into PBI-110…116, whose points sum to their scope, avoiding double counting.
-- [#51](https://github.com/Dasha365/koyash/issues/51) (PBI-117) and [#40](https://github.com/Dasha365/koyash/issues/40) (bug) were closed and their scope folded into #46–#50 and #46 respectively (2026-06-20) — not separately estimated or boarded by design.
+- [#38](https://github.com/Koyash-team/koyash/issues/38) (PBI-107) and [#39](https://github.com/Koyash-team/koyash/issues/39) (PBI-108) are intentionally unestimated tracking-parent epics — they were decomposed into PBI-110…116, whose points sum to their scope, avoiding double counting.
+- [#51](https://github.com/Koyash-team/koyash/issues/51) (PBI-117) and [#40](https://github.com/Koyash-team/koyash/issues/40) (bug) were closed and their scope folded into #46–#50 and #46 respectively (2026-06-20) — not separately estimated or boarded by design.
 
 ## 11. MVP version view
 
@@ -101,7 +101,7 @@ is populated, and deliver the landing page (US-01, deferred from MVP v1). Sprint
 | PBI-110 design assets | #44 | [#53](https://github.com/Dasha365/koyash/pull/53), [#54](https://github.com/Dasha365/koyash/pull/54) |
 | PBI-111 intro screen | #45 | [#56](https://github.com/Dasha365/koyash/pull/56) |
 | PBI-112…116 questionnaire/results screens | #46–#50 | [#61](https://github.com/Dasha365/koyash/pull/61) |
-| PBI-117 integration | [#51](https://github.com/Dasha365/koyash/issues/51) — closed 2026-06-20, folded into #46–#50 (see #38/#39/#46 for the explanation); no separate PR | — |
+| PBI-117 integration | [#51](https://github.com/Koyash-team/koyash/issues/51) — closed 2026-06-20, folded into #46–#50 (see #38/#39/#46 for the explanation); no separate PR | — |
 | PBI-118 CSS Modules | #58 | [#59](https://github.com/Dasha365/koyash/pull/59) |
 | PBI-119 README instructions | #63 | [#64](https://github.com/Dasha365/koyash/pull/64) |
 
