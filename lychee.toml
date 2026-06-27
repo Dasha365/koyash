@@ -25,6 +25,15 @@ exclude = [
   # reports/week2/mvp-v0-report.md "Public video demonstration link"
   # (historical MVP v0 demo, https://youtu.be/ftTVnoXQvI8, verified 2026-06-13).
   '^https://youtu\.be/',
+
+  # The Innopolis University GitLab instance sits behind university SSO and
+  # times out from GitHub-hosted CI runners (no credentials, no network path
+  # to the login flow). Pattern matches the platform root only.
+  # Affects: docs/Repository_Requirements.md (baseline repo-platform options:
+  # IU GitLab / GitLab.com / GitHub). Manually verified 2026-06-27: resolves
+  # to a real Innopolis University SSO login page in a browser, not a dead
+  # domain.
+  '^https://gitlab\.pg\.innopolis\.university',
 ]
 
 # Be lenient with slow or flaky external hosts (e.g. the Railway deployment,
