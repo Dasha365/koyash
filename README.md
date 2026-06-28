@@ -12,12 +12,12 @@ moisturize → spf, plus occasional treatments such as exfoliants and masks).
 their own and want a skincare routine that fits their budget and
 constraints (allergies, vegan/cruelty-free preferences).
 
-**Current status:** MVP v1 — a FastAPI backend with rule-based filtering on
-top of MongoDB Atlas (`GET /products`, `POST /recommend`) and a React +
-Vite frontend (questionnaire and results screens), deployed and wired
-end-to-end. LLM-based recommendations, skin-type personalization, and
-authentication are planned for later Sprints — see
-[docs/roadmap.md](docs/roadmap.md).
+**Current status:** v1.1.0 (Sprint 2) — a FastAPI backend with rule-based
+filtering and skin-type personalization on top of MongoDB Atlas
+(`GET /products`, `POST /recommend`) and a React + Vite frontend (landing
+page, storytelling and short questionnaire variants, results screen),
+deployed and wired end-to-end. LLM-based recommendations and authentication
+are planned for later Sprints — see [docs/roadmap.md](docs/roadmap.md).
 
 ## Running locally
 
@@ -70,7 +70,7 @@ source dataset, JSON-schema validators, sanity checks) — see
 
 - API + Swagger docs: <https://koyash-production.up.railway.app/docs>
 - Frontend: <https://koyash-production-25e0.up.railway.app>
-- Demo video: <https://youtu.be/SDuBlborKr0>
+- Demo video (v1.1.0 / Sprint 2): <https://youtu.be/RpLB18HBQVQ>
 
 ## Link checking
 
@@ -86,10 +86,10 @@ A couple of links are narrowly excluded, with justification in
 - `http://localhost:8000/...` (in "Running locally" above and in the
   `reports/week2/mvp-v0-report.md` smoke-check) — local development URLs that
   are never reachable from a CI runner.
-- `https://youtu.be/...` links (the current MVP v1 demo above and the
+- `https://youtu.be/...` links (the current v1.1.0 demo above and the
   historical MVP v0 demo in `reports/week2/mvp-v0-report.md`) — YouTube blocks
   automated HTTP clients at the TLS/bot-detection layer, so lychee can never
   get a real response; the lychee.toml exclusion is a pattern match on any
-  `youtu.be` link, not a single hard-coded URL. Manually verified on
-  2026-06-21 that the current demo (<https://youtu.be/SDuBlborKr0>) plays
-  normally in a browser; the MVP v0 link was verified on 2026-06-13.
+  `youtu.be` link, not a single hard-coded URL. The MVP v0 link was verified
+  on 2026-06-13; the v1.1.0 demo (<https://youtu.be/RpLB18HBQVQ>) still needs
+  a manual browser playback check before submission.
