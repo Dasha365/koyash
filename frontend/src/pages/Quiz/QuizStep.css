@@ -1,109 +1,117 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-@keyframes anketaFade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes optionIn  { from { opacity: 0; transform: translateY(8px); }  to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse     { 0% { transform: scale(1);} 45% { transform: scale(0.97);} 100% { transform: scale(1);} }
+@keyframes qFade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes qOptIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes qPulse { 0% { transform: scale(1); } 45% { transform: scale(.94); } 100% { transform: scale(1); } }
+@keyframes qFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-.anketaRoot { animation: anketaFade 0.4s ease both; }
+.qRoot { width: 1307px; height: 738px; position: relative; animation: qFade .4s ease both; }
 
-/* generic absolutely-positioned element on the 1280×750 stage */
-.aPos { position: absolute; margin: 0; z-index: 3; }
+/* logo + progress line */
+.qLogo { position: absolute; left: 50px; top: 0; width: 75px; height: auto; z-index: 5; }
+.qTrack { position: absolute; left: 0; top: 67px; width: 1307px; height: 2px; background: #fdf3e9; z-index: 3; }
+.qFill { position: absolute; left: 0; top: 66px; height: 3px; background: #d7863b; border-radius: 2px; transition: width .45s ease; z-index: 3; }
 
-/* ── Header ──────────────────────────────────────────── */
-.aLogo  { position: absolute; left: 50px; top: -11px; width: 175px; height: auto; z-index: 5; }
-.aTrack { position: absolute; left: 0; top: 122px; width: 1280px; height: 3px; background: #f1e2cf; z-index: 3; }
-.aFill  { height: 100%; background: #E9A563; transition: width 0.45s ease; }
-
-/* ── Illustration ────────────────────────────────────── */
-.aScene { position: absolute; z-index: 1; pointer-events: none; object-fit: contain; animation: anketaFade 0.6s ease 0.1s both; }
-
-/* ── Note pill ──────────────────────────────────────── */
-.aNote {
-  display: inline-block; background: #f8e1c0; border-radius: 10px; padding: 10px 24px;
-  font-family: 'Playfair Display', Georgia, serif; font-size: 20px; line-height: 1.25; color: #6b4e3d;
-  animation: anketaFade 0.4s ease 0.05s both;
+/* illustration + decor */
+@keyframes qHeartPulse { 0%,100% { transform: scale(1) rotate(-6deg); } 50% { transform: scale(1.12) rotate(-6deg); } }
+.qScene { position: absolute; object-fit: contain; z-index: 1; pointer-events: none; animation: qFade .6s ease .1s both; }
+.qDecor { position: absolute; object-fit: contain; z-index: 1; pointer-events: none; animation: qFade .6s ease .2s both; }
+/* heart beside the tip title (landing scale), absolutely placed */
+.qHeart {
+  position: absolute; z-index: 3; height: auto; object-fit: contain; pointer-events: none;
+  transform-origin: center; animation: qFade .6s ease .2s both, qHeartPulse 2.4s ease-in-out .6s infinite;
 }
 
-/* ── Narrative ──────────────────────────────────────── */
-.aNarrative {
-  font-family: 'Manrope', Arial, sans-serif; font-size: 18px; line-height: 1.4; color: #6b4e3d;
-  animation: anketaFade 0.45s ease 0.1s both;
+/* note pill / plain note — auto width, single line */
+.qNotePill {
+  position: absolute; z-index: 3; box-sizing: border-box; width: max-content; max-width: 1180px; white-space: nowrap;
+  background: #f8e1c0; border-radius: 10px; padding: 10px 22px;
+  font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #634938; text-align: center; line-height: 1.2;
+  animation: qFade .4s ease .05s both;
+}
+.qNote {
+  position: absolute; z-index: 3; margin: 0;
+  font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #634938; line-height: 1.3;
+  animation: qFade .4s ease .05s both;
 }
 
-/* ── Heading ────────────────────────────────────────── */
-.aHeading {
+/* narrative + heading */
+.qNarr {
+  position: absolute; z-index: 3; margin: 0;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 19px; line-height: 1.45; color: #634938;
+  animation: qFade .45s ease .1s both;
+}
+.qHead {
+  position: absolute; z-index: 3; margin: 0;
   font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 40px; line-height: 1.1; color: #634938;
-  animation: anketaFade 0.45s ease 0.15s both;
+  animation: qFade .45s ease .15s both;
 }
-.aSub {
-  font-family: 'Manrope', Arial, sans-serif; font-size: 16px; color: #9e7d68;
-  animation: anketaFade 0.45s ease 0.18s both;
-}
+.qHeadSub { font-family: 'Manrope', Arial, sans-serif; font-weight: 400; font-size: 19px; color: #9e7d68; }
 
-/* ── Options ────────────────────────────────────────── */
-.aOptions { display: flex; flex-direction: column; }
-.aOption {
-  display: flex; align-items: center; gap: 14px;
-  background: none; border: none; padding: 0; cursor: pointer; text-align: left;
-  font-family: 'Manrope', Arial, sans-serif; font-size: 20px; color: #6b4e3d; line-height: 1.2;
-  opacity: 0; animation: optionIn 0.3s ease forwards;
-  transition: color 0.15s ease, transform 0.12s ease;
+/* input */
+.qInput {
+  position: absolute; z-index: 3; box-sizing: border-box; height: 59px; padding: 0 20px;
+  background: #fdf3e9; border: 1.5px solid #fdd59d; border-radius: 10px;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 20px; color: #634938; outline: none; transition: border-color .15s ease;
+  animation: qFade .45s ease .2s both;
 }
-.aOption:nth-child(1){animation-delay:.2s}.aOption:nth-child(2){animation-delay:.26s}
-.aOption:nth-child(3){animation-delay:.32s}.aOption:nth-child(4){animation-delay:.38s}
-.aOption:nth-child(5){animation-delay:.44s}.aOption:nth-child(6){animation-delay:.5s}
-.aOption:nth-child(7){animation-delay:.56s}
-.aOption:hover { color: #634938; transform: translateX(3px); }
-.aRadio {
-  flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #d8b78c;
-  display: inline-flex; align-items: center; justify-content: center; transition: border-color 0.15s ease;
-}
-.aOption:hover .aRadio { border-color: #E9A563; }
-.aOption.selected .aRadio { border-color: #E9A563; }
-.aOption.selected .aRadio::after { content: ''; width: 56%; height: 56%; border-radius: 50%; background: #E9A563; animation: pulse 0.25s ease; }
+.qInput:focus { border-color: #e9a563; }
+.qInput::placeholder { color: #c4a88a; }
 
-/* square checkbox for multi-select */
-.aCheck {
-  flex-shrink: 0; width: 19px; height: 19px; border-radius: 4px; border: 2px solid #d8b78c;
-  display: inline-flex; align-items: center; justify-content: center; transition: border-color 0.15s ease, background 0.15s ease;
+/* options */
+.qOpts { position: absolute; z-index: 3; display: flex; flex-direction: column; animation: qFade .4s ease .15s both; }
+.qOptsGrid { display: grid; }
+.qOpt {
+  display: flex; align-items: center; gap: 12px; background: none; border: none; padding: 0; cursor: pointer; text-align: left;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 20px; color: #634938; line-height: 1.2;
+  opacity: 0; animation: qOptIn .3s ease forwards; transition: color .15s ease, transform .12s ease;
 }
-.aOption:hover .aCheck { border-color: #E9A563; }
-.aOption.selected .aCheck { border-color: #E9A563; background: #E9A563; animation: pulse 0.25s ease; }
-.aOption.selected .aCheck::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 700; line-height: 1; }
+.qOpt:nth-child(1){animation-delay:.2s}.qOpt:nth-child(2){animation-delay:.25s}.qOpt:nth-child(3){animation-delay:.3s}
+.qOpt:nth-child(4){animation-delay:.35s}.qOpt:nth-child(5){animation-delay:.4s}.qOpt:nth-child(6){animation-delay:.45s}
+.qOpt:nth-child(7){animation-delay:.5s}.qOpt:nth-child(8){animation-delay:.55s}
+.qOpt:hover { color: #d7863b; transform: translateX(2px); }
 
-.aOption.selected { color: #634938; font-weight: 500; }
+.qRadio, .qCheck {
+  flex-shrink: 0; width: 19px; height: 19px; border: 2px solid #d8b78c;
+  display: inline-flex; align-items: center; justify-content: center; transition: border-color .15s ease, background .15s ease;
+}
+.qRadio { border-radius: 50%; }
+.qCheck { border-radius: 4px; }
+.qOpt:hover .qRadio, .qOpt:hover .qCheck { border-color: #e9a563; }
+.qOpt.sel .qRadio { border-color: #e9a563; }
+.qOpt.sel .qRadio::after { content: ''; width: 55%; height: 55%; border-radius: 50%; background: #e9a563; animation: qPulse .25s ease; }
+.qOpt.sel .qCheck { border-color: #e9a563; background: #e9a563; animation: qPulse .25s ease; }
+.qOpt.sel .qCheck::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; line-height: 1; }
+.qOpt.sel { color: #634938; font-weight: 500; }
 
-/* ── Input ──────────────────────────────────────────── */
-.aInput {
-  width: 380px; padding: 13px 20px; background: #FDF3E9; border: 1.5px solid #E4C99A; border-radius: 10px;
-  font-family: 'Manrope', Arial, sans-serif; font-size: 19px; color: #634938; outline: none; transition: border-color 0.15s ease;
+/* tip */
+.qTipTitle {
+  position: absolute; z-index: 3; margin: 0;
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 32px; color: #634938; line-height: 1.15;
+  animation: qFade .45s ease .15s both;
 }
-.aInput:focus { border-color: #E9A563; }
-.aInput::placeholder { color: #c4a88a; }
-
-/* ── Tip ────────────────────────────────────────────── */
-.aTipTitle {
-  font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 32px; color: #634938;
-  animation: anketaFade 0.45s ease 0.15s both;
+.qTipBody {
+  position: absolute; z-index: 3; margin: 0;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 19px; line-height: 1.5; color: #634938;
+  animation: qFade .45s ease .2s both;
 }
-.aTipBody {
-  font-family: 'Manrope', Arial, sans-serif; font-size: 19px; line-height: 1.5; color: #6b4e3d;
-  animation: anketaFade 0.45s ease 0.2s both;
-}
-.aTipHi {
-  display: inline-block; background: #fff3e3; border: 2px solid #E9A563; border-radius: 10px; padding: 10px 22px;
+/* advice highlight card (image bg + text on top) */
+.qAdvice { position: absolute; z-index: 2; object-fit: contain; pointer-events: none; animation: qFade .45s ease .22s both; }
+.qHi {
+  position: absolute; z-index: 3; margin: 0; box-sizing: border-box; white-space: pre-line;
+  display: flex; align-items: center; justify-content: center; text-align: center;
   font-family: 'Manrope', Arial, sans-serif; font-size: 18px; color: #7a5540; line-height: 1.35;
-  animation: anketaFade 0.45s ease 0.25s both;
+  animation: qFade .45s ease .25s both;
 }
 
-/* ── Buttons ────────────────────────────────────────── */
-.aBtn {
-  position: absolute; top: 641px; height: 63px; border: none; border-radius: 12px;
-  background: #E9A563; color: #fff; font-family: 'Manrope', Arial, sans-serif; font-weight: 700; font-size: 24px;
-  cursor: pointer; z-index: 5; display: inline-flex; align-items: center; justify-content: center;
-  transition: background 0.15s ease, transform 0.12s ease;
+/* buttons (per-screen x/y from inline style) */
+.qBtn {
+  position: absolute; height: 45px; z-index: 5; border: none; border-radius: 10px;
+  background: #e9a563; color: #fdf3e9; font-family: 'Manrope', Arial, sans-serif; font-weight: 700; font-size: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  transition: background .15s ease, transform .12s ease;
 }
-.aBtn:hover { background: #e09547; transform: translateY(-2px); }
-.aBtn:disabled { background: #eccfa6; cursor: not-allowed; transform: none; }
-.aBtnBack { left: 52px;  width: 118px; }
-.aBtnNext { left: 624px; width: 282px; }
+.qBtn:hover { background: #de9850; transform: translateY(-2px); }
+.qBtn:disabled { background: #eccfa6; cursor: not-allowed; transform: none; }
+.qBack { width: 118px; }
+.qNext { width: 205px; }

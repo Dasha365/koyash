@@ -1,18 +1,12 @@
 import './QuizStep.css';
 import Stage from './Stage';
-import logo from '../../assets/quiz/logo.png';
-
-const NOTE_Y = 171;
-const NARR_Y = 217;
-const BTN_Y = 641;
-const OPTS_BOTTOM = 632; // options must end above the buttons
+import logo from '../../assets/landing/logo.png';
+import advice from '../../assets/quiz/advice.png';
+import heart from '../../assets/landing/heart.png';
 
 export default function QuizStep({ step, answer, progressPct, onChange, onNext, onBack }) {
   const isTip = step.type === 'tip';
   const f = step.fig;
-  const cx = f.content.x;
-  const cw = f.content.w;
-  const pillW = 1180 - cx; // note/highlight pills may run wider than the text column
 
   function handleOptionClick(value) {
     if (step.type === 'single') {
@@ -46,65 +40,98 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
     return true;
   }
 
-  // Distribute options between optsY and the buttons so they never overlap.
-  const optionGap = (() => {
-    if (!step.options) return 12;
-    const n = step.options.length;
-    if (n <= 1) return 0;
-    const rowH = 30;
-    const avail = OPTS_BOTTOM - (f.optsY ?? 430);
-    return Math.max(6, Math.min(16, (avail - n * rowH) / (n - 1)));
-  })();
+  const opts = f.opts || {};
+  const twoCol = opts.cols === 2;
 
   return (
     <Stage>
-      <div className="anketaRoot">
-        <img className="aLogo" src={logo} alt="Koyash" />
-        <div className="aTrack"><div className="aFill" style={{ width: `${progressPct}%` }} /></div>
+      <div className="qRoot">
+        <img className="qLogo" src={logo} alt="Koyash" />
+        <div className="qTrack" />
+        <div className="qFill" style={{ width: `${(progressPct / 100) * 1307}px` }} />
 
+        {/* illustration */}
         {step.scene && (
           <img
             key={step.id}
-            className="aScene"
+            className="qScene"
             src={step.scene}
             alt=""
             aria-hidden="true"
             style={{ left: f.scene.x, top: f.scene.y, width: f.scene.w, height: f.scene.h }}
           />
         )}
+        {(step.decor || []).map((d, i) => (
+          <img
+            key={i}
+            className={`qDecor${d.cls ? ' ' + d.cls : ''}`}
+            src={d.img}
+            alt=""
+            aria-hidden="true"
+            style={{ left: d.x, top: d.y, width: d.w, height: d.h }}
+          />
+        ))}
+
+        {/* note pill (every screen) — auto-width, one line */}
+        {f.notePill && (
+          <div className="qNotePill" style={{ left: f.notePill.x, top: f.notePill.y }}>
+            {isTip ? step.noteLabel : step.note}
+          </div>
+        )}
 
         {isTip ? (
           <>
-            <div className="aPos" style={{ left: cx, top: f.noteY, width: pillW }}>
-              <span className="aNote">{step.noteLabel}</span>
-            </div>
-            <h2 className="aTipTitle aPos" style={{ left: cx, top: f.titleY, width: cw }}>{step.title}</h2>
-            <p className="aTipBody aPos" style={{ left: cx, top: f.bodyY, width: cw }}>{step.body}</p>
+            <h2 className="qTipTitle" style={{ left: f.title.x, top: f.title.y, width: f.title.w }}>
+              {step.title}
+            </h2>
+            {f.heart && (
+              <img className="qHeart" src={heart} alt="" aria-hidden="true"
+                style={{ left: f.heart.x, top: f.heart.y, width: f.heart.w }} />
+            )}
+            <p className="qTipBody" style={{ left: f.body.x, top: f.body.y, width: f.body.w }}>
+              {step.body}
+            </p>
             {step.highlight && (
-              <div className="aPos" style={{ left: cx, top: f.hiY, width: cw }}>
-                <span className="aTipHi">{step.highlight}</span>
-              </div>
+              <>
+                <img
+                  className="qAdvice"
+                  src={advice}
+                  alt=""
+                  aria-hidden="true"
+                  style={{ left: f.advice.x, top: f.advice.y, width: f.advice.w, height: f.advice.h }}
+                />
+                {/* text centered over the card, right ~1/6 reserved for the branch */}
+                <div
+                  className="qHi"
+                  style={{
+                    left: f.advice.x,
+                    top: f.advice.y,
+                    width: f.advice.w,
+                    height: f.advice.h,
+                    paddingRight: Math.round(f.advice.w / 6),
+                  }}
+                >
+                  {step.highlight}
+                </div>
+              </>
             )}
           </>
         ) : (
           <>
-            {step.note && (
-              <div className="aPos" style={{ left: cx, top: NOTE_Y, width: pillW }}>
-                <span className="aNote">{step.note}</span>
-              </div>
-            )}
             {step.noteBody && (
-              <p className="aNarrative aPos" style={{ left: cx, top: NARR_Y, width: cw }}>{step.noteBody}</p>
+              <p className="qNarr" style={{ left: f.narr.x, top: f.narr.y, width: f.narr.w }}>
+                {step.noteBody}
+              </p>
             )}
-            <h2 className="aHeading aPos" style={{ left: cx, top: f.headY, width: pillW }}>{step.question}</h2>
-            {step.subQuestion && (
-              <p className="aSub aPos" style={{ left: cx, top: f.subY, width: pillW }}>{step.subQuestion}</p>
-            )}
+            <h2 className="qHead" style={{ left: f.head.x, top: f.head.y, width: f.head.w }}>
+              {step.question}
+              {step.subQuestion && <span className="qHeadSub"> {step.subQuestion}</span>}
+            </h2>
 
             {step.type === 'input' && (
               <input
-                className="aInput aPos"
-                style={{ left: cx, top: f.fieldY }}
+                className="qInput"
+                style={{ left: f.input.x, top: f.input.y, width: f.input.w }}
                 type="number"
                 min="10"
                 max="100"
@@ -115,16 +142,24 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
             )}
 
             {(step.type === 'single' || step.type === 'multi') && (
-              <div className="aOptions aPos" style={{ left: cx, top: f.optsY, width: cw, gap: optionGap }}>
-                {step.options.map((opt) => (
+              <div
+                className={`qOpts${twoCol ? ' qOptsGrid' : ''}`}
+                style={{
+                  left: opts.x,
+                  top: opts.y,
+                  rowGap: `${(opts.rowGap || 40) - 27}px`,
+                  ...(twoCol ? { columnGap: `${opts.col2x - opts.x - 300}px`, gridTemplateColumns: '300px max-content' } : {}),
+                }}
+              >
+                {step.options.map((o, i) => (
                   <button
-                    key={opt.value ?? 'none'}
+                    key={o.value ?? `none${i}`}
                     type="button"
-                    className={`aOption${isSelected(opt.value) ? ' selected' : ''}`}
-                    onClick={() => handleOptionClick(opt.value)}
+                    className={`qOpt${isSelected(o.value) ? ' sel' : ''}`}
+                    onClick={() => handleOptionClick(o.value)}
                   >
-                    <span className={step.type === 'multi' ? 'aCheck' : 'aRadio'} />
-                    {opt.label}
+                    <span className={step.type === 'multi' ? 'qCheck' : 'qRadio'} />
+                    {o.label}
                   </button>
                 ))}
               </div>
@@ -132,8 +167,16 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
           </>
         )}
 
-        <button className="aBtn aBtnBack" type="button" onClick={onBack}>Назад</button>
-        <button className="aBtn aBtnNext" type="button" onClick={onNext} disabled={!canProceed()}>
+        <button className="qBtn qBack" type="button" style={{ left: f.back.x, top: f.back.y }} onClick={onBack}>
+          Назад
+        </button>
+        <button
+          className="qBtn qNext"
+          type="button"
+          style={{ left: f.next.x, top: f.next.y }}
+          onClick={onNext}
+          disabled={!canProceed()}
+        >
           Дальше →
         </button>
       </div>

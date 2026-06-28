@@ -14,9 +14,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   exists the step is left empty instead of taking a mismatched product. `RecommendRequest` accepts an
   optional `skin_type` (normal / dry / oily / combination / sensitive); `Product` carries the `skintype`
   tags. Hard filters (vegan, cruelty-free, allergens) run first and are never relaxed by skin-type matching.
+- The storytelling questionnaire now sends the user's `skin_type` answer to `POST /recommend`
+  (the question existed on screen already; the request payload didn't include it before).
+- Short, non-storytelling questionnaire variant at `/quick`: same questions as the
+  storytelling flow (including skin type), without the narrative framing; shares the
+  same `/recommend` request-building and results screen, so identical answers produce
+  an identical cosmetic bag regardless of which variant the user takes.
 - Landing page (`/`): full build per the Figma design — hero, problem/solution section,
   "smart selection" and "why trust Koyash" sections, how-it-works steps, and entry points
   into the storytelling and short questionnaire flows.
+
+### Changed
+
+- Storytelling questionnaire and results screen: consolidated the per-screen quiz
+  components into a single generic step component, reworked button and heart-icon
+  styling, and fixed budget-screen copy ("аптечном" → "обычном") per customer review
+  feedback.
 
 ## [1.0.0] - 2026-06-21
 

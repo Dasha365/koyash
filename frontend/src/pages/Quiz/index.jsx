@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import QuizScreen1 from './QuizScreen1';
 import QuizStep from './QuizStep';
 import Loading from './Loading';
-import { ACTIVE_STEPS as STEPS, TOTAL_QUESTION_STEPS } from './quizConfig';
+import { STEPS } from './quizConfig';
 import sceneLoading from '../../assets/quiz/scene-loading.png';
 
 const INTRO_STEP = 0;
@@ -78,9 +78,9 @@ export default function Quiz() {
   const currentStep = STEPS[step - 1];
   if (!currentStep) return null;
 
-  // Progress = how many question-steps reached so far (tips carry the last value)
-  const questionsReached = STEPS.slice(0, step).filter((s) => s.questionStep).length;
-  const progressPct = (questionsReached / TOTAL_QUESTION_STEPS) * 100;
+  // Progress advances on every screen (including tip-only screens), so the
+  // bar keeps moving even when the step isn't a counted question.
+  const progressPct = (step / STEPS.length) * 100;
 
   return (
     <QuizStep

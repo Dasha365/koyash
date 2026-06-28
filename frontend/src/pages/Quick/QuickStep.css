@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@keyframes kFade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes kOptIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes kPulse { 0% { transform: scale(1);} 45% { transform: scale(.94);} 100% { transform: scale(1);} }
+@keyframes kFloat { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-10px);} }
+
+.kRoot { width: 1307px; height: 738px; position: relative; animation: kFade .4s ease both; }
+
+.kLogo { position: absolute; left: 50px; top: 0; width: 75px; height: auto; z-index: 5; }
+.kTrack { position: absolute; left: 0; top: 67px; width: 1307px; height: 2px; background: #fdf3e9; z-index: 3; }
+.kFill { position: absolute; left: 0; top: 66px; height: 3px; background: #d7863b; border-radius: 2px; transition: width .45s ease; z-index: 3; }
+
+.kScene { position: absolute; object-fit: contain; z-index: 1; pointer-events: none; animation: kFade .6s ease .1s both; }
+.kDecor { position: absolute; object-fit: contain; z-index: 1; pointer-events: none; animation: kFade .6s ease .2s both; }
+
+.kHead {
+  position: absolute; z-index: 3; margin: 0;
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 40px; line-height: 1.1; color: #634938;
+  animation: kFade .45s ease .12s both;
+}
+.kHeadSub { font-family: 'Manrope', Arial, sans-serif; font-weight: 400; font-size: 19px; color: #9e7d68; }
+.kHelper {
+  position: absolute; z-index: 3; margin: 0;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 19px; line-height: 1.5; color: #634938;
+  animation: kFade .45s ease .18s both;
+}
+
+.kInput {
+  position: absolute; z-index: 3; box-sizing: border-box; height: 59px; padding: 0 20px;
+  background: #fdf3e9; border: 1.5px solid #fdd59d; border-radius: 10px;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 20px; color: #634938; outline: none; transition: border-color .15s ease;
+  animation: kFade .45s ease .22s both;
+}
+.kInput:focus { border-color: #e9a563; }
+.kInput::placeholder { color: #c4a88a; }
+
+.kOpts { position: absolute; z-index: 3; display: flex; flex-direction: column; animation: kFade .4s ease .2s both; }
+.kOptsGrid { display: grid; }
+.kOpt {
+  display: flex; align-items: center; gap: 12px; background: none; border: none; padding: 0; cursor: pointer; text-align: left;
+  font-family: 'Manrope', Arial, sans-serif; font-size: 20px; color: #634938; line-height: 1.2;
+  opacity: 0; animation: kOptIn .3s ease forwards; transition: color .15s ease, transform .12s ease;
+}
+.kOpt:nth-child(1){animation-delay:.25s}.kOpt:nth-child(2){animation-delay:.3s}.kOpt:nth-child(3){animation-delay:.35s}
+.kOpt:nth-child(4){animation-delay:.4s}.kOpt:nth-child(5){animation-delay:.45s}.kOpt:nth-child(6){animation-delay:.5s}
+.kOpt:nth-child(7){animation-delay:.55s}.kOpt:nth-child(8){animation-delay:.6s}
+.kOpt:hover { color: #d7863b; transform: translateX(2px); }
+
+.kRadio, .kCheck {
+  flex-shrink: 0; width: 19px; height: 19px; border: 2px solid #d8b78c;
+  display: inline-flex; align-items: center; justify-content: center; transition: border-color .15s ease, background .15s ease;
+}
+.kRadio { border-radius: 50%; }
+.kCheck { border-radius: 4px; }
+.kOpt:hover .kRadio, .kOpt:hover .kCheck { border-color: #e9a563; }
+.kOpt.sel .kRadio { border-color: #e9a563; }
+.kOpt.sel .kRadio::after { content: ''; width: 55%; height: 55%; border-radius: 50%; background: #e9a563; animation: kPulse .25s ease; }
+.kOpt.sel .kCheck { border-color: #e9a563; background: #e9a563; animation: kPulse .25s ease; }
+.kOpt.sel .kCheck::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; line-height: 1; }
+.kOpt.sel { color: #634938; font-weight: 500; }
+
+.kBtn {
+  position: absolute; height: 45px; z-index: 5; border: none; border-radius: 10px;
+  background: #e9a563; color: #fdf3e9; font-family: 'Manrope', Arial, sans-serif; font-weight: 700; font-size: 20px;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  transition: background .15s ease, transform .12s ease;
+}
+.kBtn:hover { background: #de9850; transform: translateY(-2px); }
+.kBtn:disabled { background: #eccfa6; cursor: not-allowed; transform: none; }
+.kBack { width: 118px; }
+.kNext { width: 205px; }

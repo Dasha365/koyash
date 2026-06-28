@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import './Results.css';
-import WideStage from './WideStage';
-import logo from '../../assets/quiz/logo.png';
+import logo from '../../assets/landing/logo.png';
+import heart from '../../assets/landing/heart.png';
 import sceneLoading from '../../assets/quiz/scene-loading.png';
 
 import bagCleanser from '../../assets/results/bag-cleanser.png';
@@ -22,6 +22,25 @@ const STEP_IMG = {
   exfoliant: bagSerum,
 };
 const bagFor = (p) => (p.image_url ? p.image_url : STEP_IMG[p.routine_step] || bagNotFound);
+
+// Russian step labels (capitalised + lowercase variant for the step line)
+const STEP_RU = {
+  cleanse: 'Очищение', tone: 'Тонизирование', serum: 'Сыворотка', moisturize: 'Увлажнение',
+  spf: 'SPF-защита', exfoliant: 'Отшелушивание', mask: 'Маска',
+};
+const STEP_LOWER = {
+  cleanse: 'очищение', tone: 'тонизирование', serum: 'сыворотка', moisturize: 'увлажнение',
+  spf: 'SPF-защита', exfoliant: 'отшелушивание', mask: 'маска',
+};
+
+// Core: "Шаг 1 из 5 — очищение | Ежедневно". Occasional: "Маска | 1–2 раза в неделю".
+function roleLine(p) {
+  const step = p.routine_step;
+  if (p.tier === 'core' && p.order_index != null) {
+    return `Шаг ${p.order_index} из 5 — ${STEP_LOWER[step] || step} | ${p.frequency}`;
+  }
+  return `${STEP_RU[step] || step} | ${p.frequency}`;
+}
 
 const fmt = (n) => Number(n).toLocaleString('ru-RU');
 const category = (j) => (j.what_it_does || []).join(' + ');
@@ -67,19 +86,13 @@ function ProductCard({ product: p, justification: j }) {
     >
       <div className="rCardImg"><img src={bagFor(p)} alt="" /></div>
       <div className="rCardBody">
-        <p className="rCardRole">{j.role}</p>
+        <p className="rCardRole">{roleLine(p)}</p>
         <h3 className="rCardName">{p.name}</h3>
         <p className="rCardBrand">{p.brand}</p>
         <p className="rCardCategory">{category(j)}</p>
-        {j.key_actives && j.key_actives.length > 0 && (
-          <div className="rCardChips">
-            {j.key_actives.map((a) => <span key={a} className="rChip">{a}</span>)}
-          </div>
-        )}
         {j.summary_ru && <p className="rCardWhy">{j.summary_ru}</p>}
         <div className="rCardFooter">
           <span className="rCardPrice">{fmt(p.price_rub)} ₽</span>
-          <span className="rCardFreq">{p.frequency}</span>
           {href && <span className="rCardLink">Перейти в магазин →</span>}
         </div>
       </div>
@@ -100,17 +113,21 @@ export default function Results() {
   const { bag, meta } = results;
 
   return (
-    <WideStage>
-      <div className="rPage">
-        <img className="rLogo" src={logo} alt="Koyash" />
-        <div className="rTrack" />
+    <div className="rPage">
+      {/* logo + full-width bar, same look as the quiz header */}
+      <img className="rLogo" src={logo} alt="Koyash" />
+      <div className="rTrack" />
 
-        <span className="rNote">Солнце кладёт перед тобой аккуратный листок с подборкой.</span>
+      <div className="rWrap">
+        <span className="rNote">Koyash кладёт перед тобой аккуратный листок с подборкой.</span>
         <p className="rNarrative">
           — Вот, солнышко. Это твоя косметичка. Я подобрала каждое средство под
           тебя — и сейчас объясню почему.
         </p>
-        <h1 className="rTitle">Вот твоя косметичка<span className="heart">♡</span></h1>
+        <h1 className="rTitle">
+          Вот твоя косметичка
+          <img className="rHeart" src={heart} alt="" aria-hidden="true" />
+        </h1>
 
         <div className="rList">
           {bag.map((item) => (
@@ -119,7 +136,6 @@ export default function Results() {
         </div>
 
         <div className="rTotal">Сумма: <span className="sum">{fmt(meta.total_price_rub)} ₽</span></div>
-        <p className="rTotalNote">стоимость полного набора ухода на 2–3 месяца</p>
         {meta.note && <p className="rMetaNote">{meta.note}</p>}
 
         <div className="rActions">
@@ -127,6 +143,6 @@ export default function Results() {
           <Link to="/" className="rBtnGhost">На главную</Link>
         </div>
       </div>
-    </WideStage>
+    </div>
   );
 }

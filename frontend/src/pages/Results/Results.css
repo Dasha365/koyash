@@ -3,31 +3,45 @@
 @keyframes rFade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes rCard { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Built at 1280px base width; WideStage scales it to the viewport. */
+/* Fluid responsive layout — fills any viewport width. */
 .rPage {
-  width: 1280px;
+  width: 100%;
+  min-height: 100vh;
   background: #ffffff;
   font-family: 'Manrope', Arial, sans-serif;
   color: #634938;
-  padding: 0 50px 70px;
+  padding-bottom: 70px;
   box-sizing: border-box;
 }
 
-/* ── Header ─────────────────────────────────────────── */
-.rLogo { width: 175px; height: auto; display: block; margin-left: 0; margin-top: -11px; }
-.rTrack { height: 3px; background: #E9A563; margin-top: -4px; }
+/* ── Header (same look as the quiz: small logo, thin full-width bar high up) */
+.rLogo { width: 90px; height: auto; display: block; margin: 4px 0 0 50px; }
+.rTrack { width: 100%; height: 3px; background: #d7863b; margin-top: 6px; }
+
+/* centered content column — wide, so the side margins stay small */
+.rWrap {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 90px);
+  box-sizing: border-box;
+}
 
 .rNote {
   display: inline-block; margin-top: 28px; background: #f8e1c0; border-radius: 10px; padding: 11px 24px;
   font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #6b4e3d;
   animation: rFade 0.4s ease 0.05s both;
 }
-.rNarrative { margin: 20px 0 0; font-size: 20px; line-height: 1.45; color: #6b4e3d; animation: rFade 0.45s ease 0.1s both; }
+.rNote { font-size: clamp(15px, 1.6vw, 20px); }
+.rNarrative { margin: 20px 0 0; font-size: clamp(15px, 1.6vw, 20px); line-height: 1.45; color: #6b4e3d; animation: rFade 0.45s ease 0.1s both; }
 .rTitle {
   margin: 34px 0 0; text-align: center; font-family: 'Playfair Display', Georgia, serif;
-  font-weight: 600; font-size: 44px; color: #634938; animation: rFade 0.45s ease 0.15s both;
+  font-weight: 600; font-size: clamp(28px, 3.6vw, 44px); color: #634938; animation: rFade 0.45s ease 0.15s both;
 }
-.rTitle .heart { color: #E9A563; margin-left: 8px; }
+@keyframes rHeartPulse { 0%,100% { transform: scale(1) rotate(-6deg); } 50% { transform: scale(1.12) rotate(-6deg); } }
+.rHeart {
+  display: inline-block; height: 88px; width: auto; margin-left: 2px; vertical-align: middle;
+  transform-origin: center; animation: rHeartPulse 2.4s ease-in-out .6s infinite;
+}
 
 /* ── Product list ───────────────────────────────────── */
 .rList { margin-top: 34px; display: flex; flex-direction: column; gap: 22px; }
@@ -46,16 +60,17 @@
 .rCard:nth-child(7){animation-delay:.62s}.rCard:nth-child(8){animation-delay:.69s}
 
 .rCardImg {
-  flex-shrink: 0; width: 200px; height: 200px; border-radius: 16px; background: #ffffff;
+  flex-shrink: 0; width: clamp(120px, 16vw, 200px); height: clamp(120px, 16vw, 200px);
+  border-radius: 16px; background: #ffffff;
   border: 1px solid #f3e4d0; display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .rCardImg img { width: 90%; height: 90%; object-fit: contain; }
 
 .rCardBody { flex: 1; min-width: 0; }
 .rCardRole {
-  margin: 0 0 6px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #cf8a3d;
+  margin: 0 0 6px; font-size: 14px; font-weight: 700; letter-spacing: 0.02em; color: #cf8a3d;
 }
-.rCardName { margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 600; color: #5b4636; line-height: 1.2; }
+.rCardName { margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(19px, 2vw, 26px); font-weight: 600; color: #5b4636; line-height: 1.2; }
 .rCardBrand { margin: 4px 0 0; font-size: 15px; color: #9e7d68; }
 .rCardCategory { margin: 12px 0 0; font-size: 17px; color: #8a6c54; }
 
@@ -73,7 +88,7 @@
 .rTotal { margin-top: 36px; text-align: right; font-family: 'Playfair Display', Georgia, serif; font-size: 32px; font-weight: 600; color: #5b4636; }
 .rTotal .sum { color: #E9A563; }
 .rTotalNote { text-align: right; font-size: 15px; color: #9e7d68; margin-top: 6px; }
-.rMetaNote { text-align: right; font-size: 14px; color: #b08e72; margin-top: 12px; }
+.rMetaNote { text-align: right; font-size: 14px; color: #b08e72; margin-top: 12px; font-family: 'Manrope', Arial, sans-serif; }
 
 /* ── Actions ────────────────────────────────────────── */
 .rActions { display: flex; gap: 16px; margin-top: 40px; }
@@ -92,9 +107,9 @@
   min-height: 100vh; background: #fff; font-family: 'Manrope', Arial, sans-serif; color: #634938;
   position: relative; overflow: hidden;
 }
-.nrHeader { padding: 0 50px; }
-.nrLogo { width: 175px; height: auto; margin-top: -11px; }
-.nrBar { height: 3px; background: #E9A563; margin-top: -4px; }
+.nrHeader { padding: 4px clamp(20px, 4vw, 64px) 0; }
+.nrLogo { width: clamp(120px, 13vw, 175px); height: auto; }
+.nrBar { width: 100%; height: 3px; background: #E9A563; margin-top: -2px; }
 .nrScene { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 64%; width: auto; pointer-events: none; animation: rFade 0.6s ease 0.1s both; }
 .nrContent { max-width: 56%; padding: 70px 50px; }
 .nrNote {
@@ -107,6 +122,15 @@
 @media (max-width: 800px) {
   .nrScene { display: none; }
   .nrContent { max-width: 100%; padding: 40px 24px; }
-  .nrLogo { width: 130px; }
   .nrTitle { font-size: 30px; }
+}
+
+/* stack product cards vertically on narrow screens */
+@media (max-width: 640px) {
+  .rCard { flex-direction: column; align-items: stretch; gap: 16px; padding: 20px; }
+  .rCardImg { width: 100%; height: 180px; }
+  .rCardFooter { flex-wrap: wrap; }
+  .rActions { flex-direction: column; }
+  .rBtnPrimary, .rBtnGhost { justify-content: center; }
+  .rTotal, .rTotalNote, .rMetaNote { text-align: left; }
 }

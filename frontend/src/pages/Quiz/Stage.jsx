@@ -1,37 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import './Stage.css';
 
-// Figma frame size — every anketa screen is designed at exactly this.
-export const STAGE_W = 1280;
-export const STAGE_H = 750;
+// ── One scaling authority for the whole site ──────────────────────────────
+// Every screen is designed on a fixed-width canvas and scaled to the viewport
+// *width* (anchored top-left), so it always fills the width edge-to-edge — the
+// progress bar reaches the screen edges and the top logo is never clipped. If
+// the scaled height exceeds the viewport the page simply scrolls vertically.
+export const STAGE_W = 1307;
+export const STAGE_H = 738;
+const MAX_SCALE = 1.6; // never blow the design up past this on ultra-wide displays
 
-/**
- * Renders children inside a fixed 1280×750 "stage" (matching the Figma frame)
- * and scales the whole stage to fit the viewport, preserving aspect ratio.
- * This lets us position everything in exact Figma pixels.
- */
-export default function Stage({ children }) {
+export default function Stage({ w = STAGE_W, h = STAGE_H, mode = 'screen', children }) {
+  const innerRef = useRef(null);
   const [scale, setScale] = useState(1);
+  const [outerH, setOuterH] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function recompute() {
-      const s = Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+      const s = Math.min(window.innerWidth / w, MAX_SCALE);
       setScale(s);
+      const contentH = mode === 'page' ? innerRef.current?.offsetHeight || h : h;
+      setOuterH(contentH * s);
     }
     recompute();
     window.addEventListener('resize', recompute);
-    return () => window.removeEventListener('resize', recompute);
-  }, []);
+    const ro = new ResizeObserver(recompute);
+    if (innerRef.current) ro.observe(innerRef.current);
+    return () => {
+      window.removeEventListener('resize', recompute);
+      ro.disconnect();
+    };
+  }, [w, h, mode]);
 
   return (
-    <div className="stageViewport">
+    <div className={`stageOuter ${mode === 'page' ? 'stagePage' : 'stageScreen'}`} style={{ height: outerH || undefined }}>
       <div
-        className="stage"
-        style={{
-          width: STAGE_W,
-          height: STAGE_H,
-          transform: `scale(${scale})`,
-        }}
+        ref={innerRef}
+        className={`stageInner ${mode === 'page' ? 'stageInnerPage' : 'stageInnerScreen'}`}
+        style={{ width: w, transform: `scale(${scale})` }}
       >
         {children}
       </div>

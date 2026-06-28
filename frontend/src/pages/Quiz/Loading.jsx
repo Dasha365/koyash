@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Loading.css';
 import Stage from './Stage';
-import logo from '../../assets/quiz/logo.png';
+import logo from '../../assets/landing/logo.png';
 import sceneLoading from '../../assets/quiz/scene-loading.png';
 import { buildRequest } from './quizConfig';
 
@@ -57,27 +57,27 @@ export default function Loading({ answers }) {
   return (
     <Stage>
       <div className="loadRoot">
-        <img className="lLogo" src={logo} alt="Koyash" />
-        <div className="lTrack"><div className="lFill" style={{ width: `${progress}%` }} /></div>
+        <img className="loadLogo" src={logo} alt="Koyash" />
+        <div className="loadTrack" />
+        <div className="loadFill" style={{ width: `${(progress / 100) * 1307}px` }} />
 
-        <img className="lScene" src={sceneLoading} alt="" aria-hidden="true" />
+        <span className="loadNote">Солнце собирает твои ответы в маленькие подсказки.</span>
+        <img className="loadScene" src={sceneLoading} alt="" aria-hidden="true" />
+        <h1 className="loadTitle">Подбираю уход именно для тебя...</h1>
 
-        <span className="lNote">Солнце собирает твои ответы и наполняет косметичку.</span>
-        <h1 className="lTitle">Подбираю уход именно для тебя...</h1>
-
-        <ul className="lSteps">
+        <ul className="loadSteps">
           {LOADING_STEPS.map((text, i) => (
             <li
               key={i}
-              className={`lStep${i < visibleCount ? ' visible' : ''}${i < visibleCount - 1 ? ' done' : ''}`}
+              className={`loadStep${i < visibleCount ? ' visible' : ''}${i < visibleCount - 1 ? ' done' : ''}`}
             >
               — {text}
             </li>
           ))}
         </ul>
 
-        <div className="lBarTrack"><div className="lBarFill" style={{ width: `${progress}%` }} /></div>
-        <span className="lPercent">{progress}%</span>
+        <div className="loadBarTrack"><div className="loadBarFill" style={{ width: `${(progress / 100) * 513}px` }} /></div>
+        <span className="loadPercent">{progress}%</span>
       </div>
     </Stage>
   );
