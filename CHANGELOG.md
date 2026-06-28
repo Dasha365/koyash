@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   exists the step is left empty instead of taking a mismatched product. `RecommendRequest` accepts an
   optional `skin_type` (normal / dry / oily / combination / sensitive); `Product` carries the `skintype`
   tags. Hard filters (vegan, cruelty-free, allergens) run first and are never relaxed by skin-type matching.
+- Landing page (`/`): full build per the Figma design — hero, problem/solution section,
+  "smart selection" and "why trust Koyash" sections, how-it-works steps, and entry points
+  into the storytelling and short questionnaire flows.
 
 ## [1.0.0] - 2026-06-21
 
