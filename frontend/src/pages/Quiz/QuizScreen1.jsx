@@ -23,8 +23,12 @@ export default function QuizScreen1({ onNext, onBack }) {
         <h1 className="introTitle">{title}</h1>
         <img className="introHeart" src={heart} alt="" aria-hidden="true" />
         <p className="introBody">{text}</p>
-        <button className="introBtn introBack" type="button" onClick={onBack}>Назад</button>
-        <button className="introBtn introNext" type="button" onClick={onNext}>Присесть за стол →</button>
+        <button className="introBtn introBack" type="button" onClick={onBack}>
+          Назад
+        </button>
+        <button className="introBtn introNext" type="button" onClick={onNext}>
+          Присесть за стол →
+        </button>
       </div>
     </Stage>
   );

@@ -54,21 +54,32 @@ export default function QuickStep({ step, answer, progressPct, onChange, onNext,
           />
         )}
         {(step.decor || []).map((d, i) => (
-          <img key={i} className="kDecor" src={d.img} alt="" aria-hidden="true"
-            style={{ left: d.x, top: d.y, width: d.w, height: d.h }} />
+          <img
+            key={i}
+            className="kDecor"
+            src={d.img}
+            alt=""
+            aria-hidden="true"
+            style={{ left: d.x, top: d.y, width: d.w, height: d.h }}
+          />
         ))}
 
         <h2 className="kHead" style={{ left: f.head.x, top: f.head.y, width: f.head.w }}>
           {step.question}
           {step.subQuestion && <span className="kHeadSub"> {step.subQuestion}</span>}
         </h2>
-        <p className="kHelper" style={{ left: f.helper.x, top: f.helper.y, width: f.helper.w }}>{step.helper}</p>
+        <p className="kHelper" style={{ left: f.helper.x, top: f.helper.y, width: f.helper.w }}>
+          {step.helper}
+        </p>
 
         {step.type === 'input' && (
           <input
             className="kInput"
             style={{ left: f.input.x, top: f.input.y, width: f.input.w }}
-            type="number" min="10" max="100" placeholder={step.placeholder}
+            type="number"
+            min="10"
+            max="100"
+            placeholder={step.placeholder}
             value={answer || ''}
             onChange={(e) => onChange(e.target.value)}
           />
@@ -78,14 +89,24 @@ export default function QuickStep({ step, answer, progressPct, onChange, onNext,
           <div
             className={`kOpts${twoCol ? ' kOptsGrid' : ''}`}
             style={{
-              left: opts.x, top: opts.y, rowGap: `${(opts.rowGap || 40) - 27}px`,
-              ...(twoCol ? { columnGap: `${opts.col2x - opts.x - 300}px`, gridTemplateColumns: '300px max-content' } : {}),
+              left: opts.x,
+              top: opts.y,
+              rowGap: `${(opts.rowGap || 40) - 27}px`,
+              ...(twoCol
+                ? {
+                    columnGap: `${opts.col2x - opts.x - 300}px`,
+                    gridTemplateColumns: '300px max-content',
+                  }
+                : {}),
             }}
           >
             {step.options.map((o, i) => (
-              <button key={o.value ?? `none${i}`} type="button"
+              <button
+                key={o.value ?? `none${i}`}
+                type="button"
                 className={`kOpt${isSelected(o.value) ? ' sel' : ''}`}
-                onClick={() => handleOptionClick(o.value)}>
+                onClick={() => handleOptionClick(o.value)}
+              >
                 <span className={step.type === 'multi' ? 'kCheck' : 'kRadio'} />
                 {o.label}
               </button>
@@ -93,8 +114,23 @@ export default function QuickStep({ step, answer, progressPct, onChange, onNext,
           </div>
         )}
 
-        <button className="kBtn kBack" type="button" style={{ left: f.back.x, top: f.back.y }} onClick={onBack}>Назад</button>
-        <button className="kBtn kNext" type="button" style={{ left: f.next.x, top: f.next.y }} onClick={onNext} disabled={!canProceed()}>Дальше →</button>
+        <button
+          className="kBtn kBack"
+          type="button"
+          style={{ left: f.back.x, top: f.back.y }}
+          onClick={onBack}
+        >
+          Назад
+        </button>
+        <button
+          className="kBtn kNext"
+          type="button"
+          style={{ left: f.next.x, top: f.next.y }}
+          onClick={onNext}
+          disabled={!canProceed()}
+        >
+          Дальше →
+        </button>
       </div>
     </Stage>
   );

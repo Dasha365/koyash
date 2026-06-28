@@ -76,7 +76,9 @@ export default function Loading({ answers }) {
           ))}
         </ul>
 
-        <div className="loadBarTrack"><div className="loadBarFill" style={{ width: `${(progress / 100) * 513}px` }} /></div>
+        <div className="loadBarTrack">
+          <div className="loadBarFill" style={{ width: `${(progress / 100) * 513}px` }} />
+        </div>
         <span className="loadPercent">{progress}%</span>
       </div>
     </Stage>

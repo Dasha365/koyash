@@ -33,7 +33,10 @@ export default function Stage({ w = STAGE_W, h = STAGE_H, mode = 'screen', child
   }, [w, h, mode]);
 
   return (
-    <div className={`stageOuter ${mode === 'page' ? 'stagePage' : 'stageScreen'}`} style={{ height: outerH || undefined }}>
+    <div
+      className={`stageOuter ${mode === 'page' ? 'stagePage' : 'stageScreen'}`}
+      style={{ height: outerH || undefined }}
+    >
       <div
         ref={innerRef}
         className={`stageInner ${mode === 'page' ? 'stageInnerPage' : 'stageInnerScreen'}`}

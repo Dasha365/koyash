@@ -28,9 +28,7 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
   }
 
   const isSelected = (value) =>
-    step.type === 'single'
-      ? answer === value
-      : Array.isArray(answer) && answer.includes(value);
+    step.type === 'single' ? answer === value : Array.isArray(answer) && answer.includes(value);
 
   function canProceed() {
     if (isTip) return true;
@@ -85,8 +83,13 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
               {step.title}
             </h2>
             {f.heart && (
-              <img className="qHeart" src={heart} alt="" aria-hidden="true"
-                style={{ left: f.heart.x, top: f.heart.y, width: f.heart.w }} />
+              <img
+                className="qHeart"
+                src={heart}
+                alt=""
+                aria-hidden="true"
+                style={{ left: f.heart.x, top: f.heart.y, width: f.heart.w }}
+              />
             )}
             <p className="qTipBody" style={{ left: f.body.x, top: f.body.y, width: f.body.w }}>
               {step.body}
@@ -98,7 +101,12 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
                   src={advice}
                   alt=""
                   aria-hidden="true"
-                  style={{ left: f.advice.x, top: f.advice.y, width: f.advice.w, height: f.advice.h }}
+                  style={{
+                    left: f.advice.x,
+                    top: f.advice.y,
+                    width: f.advice.w,
+                    height: f.advice.h,
+                  }}
                 />
                 {/* text centered over the card, right ~1/6 reserved for the branch */}
                 <div
@@ -148,7 +156,12 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
                   left: opts.x,
                   top: opts.y,
                   rowGap: `${(opts.rowGap || 40) - 27}px`,
-                  ...(twoCol ? { columnGap: `${opts.col2x - opts.x - 300}px`, gridTemplateColumns: '300px max-content' } : {}),
+                  ...(twoCol
+                    ? {
+                        columnGap: `${opts.col2x - opts.x - 300}px`,
+                        gridTemplateColumns: '300px max-content',
+                      }
+                    : {}),
                 }}
               >
                 {step.options.map((o, i) => (
@@ -167,7 +180,12 @@ export default function QuizStep({ step, answer, progressPct, onChange, onNext, 
           </>
         )}
 
-        <button className="qBtn qBack" type="button" style={{ left: f.back.x, top: f.back.y }} onClick={onBack}>
+        <button
+          className="qBtn qBack"
+          type="button"
+          style={{ left: f.back.x, top: f.back.y }}
+          onClick={onBack}
+        >
           Назад
         </button>
         <button

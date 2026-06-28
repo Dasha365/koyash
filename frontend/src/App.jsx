@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LandingPage } from './pages/Landing/LandingPage'
-import Quiz from './pages/Quiz'
-import Quick from './pages/Quick'
-import Results from './pages/Results'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LandingPage } from './pages/Landing/LandingPage';
+import Quiz from './pages/Quiz';
+import Quick from './pages/Quick';
+import Results from './pages/Results';
 
 export default function App() {
   return (
@@ -14,5 +14,5 @@ export default function App() {
         <Route path="/results" element={<Results />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
