@@ -25,12 +25,22 @@ const bagFor = (p) => (p.image_url ? p.image_url : STEP_IMG[p.routine_step] || b
 
 // Russian step labels (capitalised + lowercase variant for the step line)
 const STEP_RU = {
-  cleanse: 'Очищение', tone: 'Тонизирование', serum: 'Сыворотка', moisturize: 'Увлажнение',
-  spf: 'SPF-защита', exfoliant: 'Отшелушивание', mask: 'Маска',
+  cleanse: 'Очищение',
+  tone: 'Тонизирование',
+  serum: 'Сыворотка',
+  moisturize: 'Увлажнение',
+  spf: 'SPF-защита',
+  exfoliant: 'Отшелушивание',
+  mask: 'Маска',
 };
 const STEP_LOWER = {
-  cleanse: 'очищение', tone: 'тонизирование', serum: 'сыворотка', moisturize: 'увлажнение',
-  spf: 'SPF-защита', exfoliant: 'отшелушивание', mask: 'маска',
+  cleanse: 'очищение',
+  tone: 'тонизирование',
+  serum: 'сыворотка',
+  moisturize: 'увлажнение',
+  spf: 'SPF-защита',
+  exfoliant: 'отшелушивание',
+  mask: 'маска',
 };
 
 // Core: "Шаг 1 из 5 — очищение | Ежедневно". Occasional: "Маска | 1–2 раза в неделю".
@@ -60,15 +70,21 @@ function NoResults({ onRetake }) {
       </header>
       <img className="nrScene" src={sceneLoading} alt="" aria-hidden="true" />
       <div className="nrContent">
-        <span className="nrNote">Я всё проверила, солнышко. Но точного совпадения пока не нашлось.</span>
+        <span className="nrNote">
+          Я всё проверила, солнышко. Но точного совпадения пока не нашлось.
+        </span>
         <h1 className="nrTitle">Ничего идеального не нашлось ♡</h1>
         <p className="nrText">
-          По твоим ответам среди уходовой косметики не нашлось средств, которые
-          подошли бы без компромиссов. Можно немного смягчить фильтры и попробовать снова.
+          По твоим ответам среди уходовой косметики не нашлось средств, которые подошли бы без
+          компромиссов. Можно немного смягчить фильтры и попробовать снова.
         </p>
         <div className="nrActions">
-          <button className="rBtnPrimary" type="button" onClick={onRetake}>Пройти заново</button>
-          <Link to="/" className="rBtnGhost">Выйти</Link>
+          <button className="rBtnPrimary" type="button" onClick={onRetake}>
+            Пройти заново
+          </button>
+          <Link to="/" className="rBtnGhost">
+            Выйти
+          </Link>
         </div>
       </div>
     </div>
@@ -84,7 +100,9 @@ function ProductCard({ product: p, justification: j }) {
       target={href ? '_blank' : undefined}
       rel={href ? 'noopener noreferrer' : undefined}
     >
-      <div className="rCardImg"><img src={bagFor(p)} alt="" /></div>
+      <div className="rCardImg">
+        <img src={bagFor(p)} alt="" />
+      </div>
       <div className="rCardBody">
         <p className="rCardRole">{roleLine(p)}</p>
         <h3 className="rCardName">{p.name}</h3>
@@ -121,8 +139,8 @@ export default function Results() {
       <div className="rWrap">
         <span className="rNote">Koyash кладёт перед тобой аккуратный листок с подборкой.</span>
         <p className="rNarrative">
-          — Вот, солнышко. Это твоя косметичка. Я подобрала каждое средство под
-          тебя — и сейчас объясню почему.
+          — Вот, солнышко. Это твоя косметичка. Я подобрала каждое средство под тебя — и сейчас
+          объясню почему.
         </p>
         <h1 className="rTitle">
           Вот твоя косметичка
@@ -135,12 +153,18 @@ export default function Results() {
           ))}
         </div>
 
-        <div className="rTotal">Сумма: <span className="sum">{fmt(meta.total_price_rub)} ₽</span></div>
+        <div className="rTotal">
+          Сумма: <span className="sum">{fmt(meta.total_price_rub)} ₽</span>
+        </div>
         {meta.note && <p className="rMetaNote">{meta.note}</p>}
 
         <div className="rActions">
-          <button className="rBtnPrimary" type="button" onClick={handleRetake}>Пройти заново</button>
-          <Link to="/" className="rBtnGhost">На главную</Link>
+          <button className="rBtnPrimary" type="button" onClick={handleRetake}>
+            Пройти заново
+          </button>
+          <Link to="/" className="rBtnGhost">
+            На главную
+          </Link>
         </div>
       </div>
     </div>

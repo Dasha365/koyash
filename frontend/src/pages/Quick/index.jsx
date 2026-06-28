@@ -11,25 +11,40 @@ export default function Quick() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({
-    age: '', skin_type: null, concerns: [], budget: null,
-    allergens: [], values: [], experience: null, conditions: [],
+    age: '',
+    skin_type: null,
+    concerns: [],
+    budget: null,
+    allergens: [],
+    values: [],
+    experience: null,
+    conditions: [],
   });
 
   useEffect(() => {
     [...STEPS.map((s) => s.scene), sceneLoading].forEach((src) => {
-      if (src) { const img = new Image(); img.src = src; }
+      if (src) {
+        const img = new Image();
+        img.src = src;
+      }
     });
   }, []);
 
   const setAnswer = (id, v) => setAnswers((p) => ({ ...p, [id]: v }));
 
   function goNext() {
-    if (step >= STEPS.length) { setStep(LOADING_STEP); return; }
+    if (step >= STEPS.length) {
+      setStep(LOADING_STEP);
+      return;
+    }
     setStep((s) => s + 1);
   }
   function goBack() {
     if (step === LOADING_STEP) return;
-    if (step === 1) { navigate('/'); return; }
+    if (step === 1) {
+      navigate('/');
+      return;
+    }
     setStep((s) => s - 1);
   }
 

@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-ssr
+coverage
+package-lock.json
+*.local
+
+# Deliberately dense, hand-aligned content where Prettier's one-item-per-line
+# expansion would destroy the table-like readability: Figma pixel-geometry
+# tables (`fig: { ... }`) and multi-declaration CSS rules.
+src/pages/Quiz/quizConfig.js
+src/pages/Quick/quickConfig.js
+**/*.css
