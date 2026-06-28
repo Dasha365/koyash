@@ -8,13 +8,8 @@ Cross-reference: [quality-requirements.md](quality-requirements.md),
 
 **CI workflow:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)
 **Latest protected-default-branch (`main`) CI run:**
-[CI workflow run](https://github.com/Koyash-team/koyash/actions/runs/28326109815) ·
-[Lychee run](https://github.com/Koyash-team/koyash/actions/runs/28326109822)
-**Frontend CI jobs (PBI-209):** not yet on a `main` run at the time of writing — merged
-into the pipeline via [PR #96](https://github.com/Koyash-team/koyash/pull/96); evidence
-below links to that PR's own passing run
-([CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695)) pending merge.
-This section must be re-linked to a `main` run once #96 is merged.
+[CI workflow run](https://github.com/Koyash-team/koyash/actions/runs/28328682771) ·
+[Lychee run](https://github.com/Koyash-team/koyash/actions/runs/28328682766)
 **Branch protection / rules evidence:** [ruleset `main`](https://github.com/Koyash-team/koyash/rules/17644441)
 (non-fast-forward, 1 required approving review, required review-thread resolution,
 required status checks on all 11 jobs below — 6 backend/Lychee + 5 frontend added for PBI-209)
@@ -23,9 +18,9 @@ required status checks on all 11 jobs below — 6 backend/Lychee + 5 frontend ad
 
 | Critical module | Why critical | Required line coverage | Current line coverage | Evidence |
 |---|---|---:|---:|---|
-| `backend/app/api/recommend.py` | Owns the core product value: hard filtering (vegan/cruelty-free/allergens), segment fallback, skin-type preference, basket assembly, and per-product justification (US-04, US-05, US-08, US-09). | 30% | 100% | [Backend tests + QRTs + coverage run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290092) |
-| `frontend/src/pages/Quiz/quizConfig.js` (`buildRequest`) | Assembles the questionnaire answers into the `/recommend` request payload; shared by both the storytelling (`Quiz`) and short (`Quick`) flows — a defect here silently breaks every recommendation request. | 30% | 100% | [Frontend tests + coverage run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935523) |
-| `frontend/src/pages/Quiz/Loading.jsx` | Calls `POST /recommend`, branches on success/422 (`NO_PRODUCTS_AVAILABLE`)/error, and navigates to the results screen with the right state — the only place the frontend talks to the recommendation API. | 30% | 96% | [Frontend tests + coverage run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935523) |
+| `backend/app/api/recommend.py` | Owns the core product value: hard filtering (vegan/cruelty-free/allergens), segment fallback, skin-type preference, basket assembly, and per-product justification (US-04, US-05, US-08, US-09). | 30% | 100% | [Backend tests + QRTs + coverage run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978389) |
+| `frontend/src/pages/Quiz/quizConfig.js` (`buildRequest`) | Assembles the questionnaire answers into the `/recommend` request payload; shared by both the storytelling (`Quiz`) and short (`Quick`) flows — a defect here silently breaks every recommendation request. | 30% | 100% | [Frontend tests + coverage run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978392) |
+| `frontend/src/pages/Quiz/Loading.jsx` | Calls `POST /recommend`, branches on success/422 (`NO_PRODUCTS_AVAILABLE`)/error, and navigates to the results screen with the right state — the only place the frontend talks to the recommendation API. | 30% | 96% | [Frontend tests + coverage run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978392) |
 
 Global repository coverage is lower than the critical-module figures above: no other
 backend module (`app/api/products.py`, `app/core/database.py`, `app/models/product.py`,
@@ -39,11 +34,11 @@ untested.
 
 | Test type | Scope | Command or CI check | Latest result | Evidence |
 |---|---|---|---|---|
-| Backend unit tests | Recommendation/matching logic: segment fallback, hard filters, skin-type preference, justification, ranking (`backend/tests/test_recommend_unit.py`) | `cd backend && python -m pytest tests/test_recommend_unit.py` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290092) |
-| Backend integration tests | `POST /recommend` end-to-end via FastAPI `TestClient` against an in-memory catalog, plus the QRT suite below | `cd backend && python -m pytest` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290092) |
-| Backend automated QRTs | QR-001 (allergen exclusion), QR-002 (input-space robustness), QR-003 (`/recommend` latency) | `cd backend && python -m pytest -m qrt` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290092) |
-| Frontend unit tests | `buildRequest` request-shape logic (`frontend/src/pages/Quiz/quizConfig.test.js`, 11 tests) | `cd frontend && npx vitest run src/pages/Quiz/quizConfig.test.js` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935523) |
-| Frontend integration tests | `Loading` <-> `/recommend` boundary: success, 422 (`NO_PRODUCTS_AVAILABLE`), and network-error paths, with `fetch`/`useNavigate` mocked (`frontend/src/pages/Quiz/Loading.test.jsx`, 4 tests) | `cd frontend && npx vitest run src/pages/Quiz/Loading.test.jsx` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935523) |
+| Backend unit tests | Recommendation/matching logic: segment fallback, hard filters, skin-type preference, justification, ranking (`backend/tests/test_recommend_unit.py`) | `cd backend && python -m pytest tests/test_recommend_unit.py` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978389) |
+| Backend integration tests | `POST /recommend` end-to-end via FastAPI `TestClient` against an in-memory catalog, plus the QRT suite below | `cd backend && python -m pytest` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978389) |
+| Backend automated QRTs | QR-001 (allergen exclusion), QR-002 (input-space robustness), QR-003 (`/recommend` latency) | `cd backend && python -m pytest -m qrt` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978389) |
+| Frontend unit tests | `buildRequest` request-shape logic (`frontend/src/pages/Quiz/quizConfig.test.js`, 11 tests) | `cd frontend && npx vitest run src/pages/Quiz/quizConfig.test.js` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978392) |
+| Frontend integration tests | `Loading` <-> `/recommend` boundary: success, 422 (`NO_PRODUCTS_AVAILABLE`), and network-error paths, with `fetch`/`useNavigate` mocked (`frontend/src/pages/Quiz/Loading.test.jsx`, 4 tests) | `cd frontend && npx vitest run src/pages/Quiz/Loading.test.jsx` | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978392) |
 
 322 backend tests, 100% line coverage on `backend/app/api/recommend.py` (required ≥30%).
 15 frontend tests, 100%/96% line coverage on `quizConfig.js`/`Loading.jsx` (required ≥30%
@@ -54,18 +49,18 @@ below the next table.
 
 | Gate or check | Required for Done? | Latest protected-branch status | Evidence |
 |---|---|---|---|
-| Backend linting (ruff) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290089) |
-| Backend type checking (mypy) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290093) |
-| Backend build (Docker image) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290097) |
-| Backend unit + integration tests + coverage gate | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290092) |
-| Backend automated QRTs | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290092) |
-| Backend additional QA check (dependency vulnerability scan) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290080) |
-| Link checking (Lychee) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109822) |
-| Frontend linting (eslint) | Yes | Passing (PR #96, pending merge) | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935498) |
-| Frontend format check (prettier) | Yes | Passing (PR #96, pending merge) | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935513) |
-| Frontend build (vite build) | Yes | Passing (PR #96, pending merge) | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935503) |
-| Frontend unit + integration tests + coverage gate | Yes | Passing (PR #96, pending merge) | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935523) |
-| Frontend additional QA check (dependency vulnerability scan) | Yes | Passing (PR #96, pending merge) | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935504) |
+| Backend linting (ruff) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978400) |
+| Backend type checking (mypy) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978485) |
+| Backend build (Docker image) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978397) |
+| Backend unit + integration tests + coverage gate | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978389) |
+| Backend automated QRTs | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978389) |
+| Backend additional QA check (dependency vulnerability scan) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978449) |
+| Link checking (Lychee) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682766) |
+| Frontend linting (eslint) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978383) |
+| Frontend format check (prettier) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978419) |
+| Frontend build (vite build) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978396) |
+| Frontend unit + integration tests + coverage gate | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978392) |
+| Frontend additional QA check (dependency vulnerability scan) | Yes | Passing | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978406) |
 
 **Note on frontend quality requirement tests:** `ci.yml` has no path filters, so the
 backend QRT job (QR-001/002/003) already runs on every PR, including frontend-only ones.
@@ -76,8 +71,8 @@ separate frontend-specific QRT (e.g. accessibility or performance) at this time.
 
 | QA objective or risk | Additional QA check | Scope | Latest result | Evidence | Limitations or follow-up |
 |---|---|---|---|---|---|
-| Dependencies with known vulnerabilities may expose the deployed API to avoidable risk. | Automated dependency vulnerability scan (`pip-audit`). | `backend/requirements.txt` (runtime dependencies). | Passing — 0 known vulnerabilities. | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28326109815/job/83916290080) | First run found 9 known CVEs (`fastapi`/`python-dotenv`, transitively `starlette`); fixed by upgrading `fastapi` to 0.138.1 and `python-dotenv` to 1.2.2 (PR #87). |
-| Dependencies with known vulnerabilities may expose deployed frontend users to avoidable risk. | Automated dependency vulnerability scan (`npm audit --omit=dev`). | `frontend/package-lock.json` (runtime dependencies). | Passing — 0 known vulnerabilities (PR #96, pending merge). | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328283695/job/83921935504) | New CVEs disclosed after a dependency is pinned will still require manual triage when the scan next reports them. |
+| Dependencies with known vulnerabilities may expose the deployed API to avoidable risk. | Automated dependency vulnerability scan (`pip-audit`). | `backend/requirements.txt` (runtime dependencies). | Passing — 0 known vulnerabilities. | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978449) | First run found 9 known CVEs (`fastapi`/`python-dotenv`, transitively `starlette`); fixed by upgrading `fastapi` to 0.138.1 and `python-dotenv` to 1.2.2 (PR #87). |
+| Dependencies with known vulnerabilities may expose deployed frontend users to avoidable risk. | Automated dependency vulnerability scan (`npm audit --omit=dev`). | `frontend/package-lock.json` (runtime dependencies). | Passing — 0 known vulnerabilities. | [CI run](https://github.com/Koyash-team/koyash/actions/runs/28328682771/job/83922978406) | New CVEs disclosed after a dependency is pinned will still require manual triage when the scan next reports them. |
 
 ## Manual Evidence That Does Not Count as QRT
 
