@@ -20,6 +20,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   storytelling flow (including skin type), without the narrative framing; shares the
   same `/recommend` request-building and results screen, so identical answers produce
   an identical cosmetic bag regardless of which variant the user takes.
+- Landing page (`/`): full build per the Figma design — hero, problem/solution section,
+  "smart selection" and "why trust Koyash" sections, how-it-works steps, and entry points
+  into the storytelling and short questionnaire flows.
 
 ### Changed
 

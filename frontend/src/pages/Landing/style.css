@@ -1,28 +1,66 @@
-.landing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100svh;
-  padding: 40px;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
+
+/* Landing built on the 1633px Figma canvas (Page 3), scaled by Stage. */
+.landingCanvas {
+  position: relative;
+  width: 1633px;
+  height: 5601px;
+  background: #ffffff;
+  color: #634938;
   font-family: 'Manrope', Arial, sans-serif;
-  color: #3a2e28;
-  background: #fdf8f3;
+  overflow: hidden;
 }
 
-.landing h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 48px;
-  margin-bottom: 16px;
-}
+.lAbs { position: absolute; margin: 0; }
+img.lAbs { pointer-events: none; object-fit: contain; }
 
-.landing__cta {
-  margin-top: 24px;
-  padding: 14px 28px;
-  background: #c17f3e;
-  color: #fff;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 600;
-} 
+/* typography */
+.lHeroTitle { font-family: 'Playfair Display',Georgia,serif; font-style: normal; font-weight: 600; font-size: 44px; line-height: 1.22; color: #634938; }
+.lHeroTitle .accent { color: #e9a563; font-style: italic; }
+.lHeroBody  { font-family: 'Manrope',Arial,sans-serif; font-weight: 400; font-size: 22px; line-height: 1.45; color: #634938; }
+.lHeroBody b { font-weight: 700; }
+.lSectionTitle { font-family: 'Playfair Display',Georgia,serif; font-weight: 700; font-size: 28px; line-height: 1.25; color: #634938; }
+.lCardTitleLg { font-family: 'Playfair Display',Georgia,serif; font-weight: 700; font-size: 24px; line-height: 1.2; color: #634938; }
+.lCardTitle { font-family: 'Playfair Display',Georgia,serif; font-weight: 700; font-size: 20px; line-height: 1.25; color: #634938; }
+.lBody { font-family: 'Manrope',Arial,sans-serif; font-weight: 400; font-size: 18px; line-height: 1.5; color: #634938; }
+.lNote { font-family: 'Manrope',Arial,sans-serif; font-weight: 700; font-size: 20px; line-height: 1.4; color: #634938; }
+.lNoteScript { font-family: 'Manrope',Arial,sans-serif; font-weight: 400; font-size: 20px; line-height: 1.45; color: #634938; }
+.lAnalysisCap { font-family: 'Manrope',Arial,sans-serif; font-weight: 500; font-size: 20px; color: #634938; }
+.lNav { font-family: 'Manrope',Arial,sans-serif; font-weight: 700; font-size: 18px; color: #634938; cursor: pointer; text-decoration: none; transition: color .15s ease;
+  background: none; border: none; padding: 0; }
+.lNav:hover { color: #E9A563; }
+.lFooter { font-family: 'Manrope',Arial,sans-serif; font-weight: 400; font-size: 20px; color: #634938; }
+
+/* button */
+.lBtn {
+  position: absolute; height: 51px; width: 281px; border: 3px solid #ffc996; border-radius: 10px;
+  background: #ffc996; color: #634938; font-family: 'Manrope',Arial,sans-serif; font-weight: 700; font-size: 20px;
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.lBtn:hover { background: #ffbd80; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(233,165,99,.3); }
+
+/* decoration — img.* selectors to beat img.lAbs { object-fit: contain } */
+img.lSmear { z-index: 0; object-fit: cover; }
+img.lSmear.lFlip { transform: scaleX(-1); }
+img.lLine { z-index: 0; object-fit: contain; }
+
+/* section title centered (H+V) over its smear */
+.lSmearTitle {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  z-index: 1; white-space: pre-line;
+  font-family: 'Playfair Display',Georgia,serif; font-weight: 700; font-size: 28px; line-height: 1.25; color: #634938;
+}
+.lFootLine { position: absolute; left: 0; width: 1600px; height: 2px; background: #634938; }
+.lVDash { position: absolute; width: 0; border-left: 2px dashed #ecd3ad; }
+.lHDash { position: absolute; height: 0; border-top: 2px dashed #e7c69b; }
+
+/* animations */
+@keyframes lFloat { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-14px);} }
+@keyframes lPulse { 0%,100% { transform: scale(1) rotate(-6deg);} 50% { transform: scale(1.12) rotate(-6deg);} }
+.lFloat { animation: lFloat 6s ease-in-out infinite; }
+.lHeart { animation: lPulse 2.4s ease-in-out infinite; transform-origin: center; }
+
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+img.reveal { transition: opacity .7s ease, transform .7s ease; }
