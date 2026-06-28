@@ -1,42 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @keyframes lFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-.loadRoot { animation: lFade 0.4s ease both; }
+.loadRoot { width: 1307px; height: 738px; position: relative; animation: lFade .4s ease both; }
 
-.lLogo  { position: absolute; left: 50px; top: -11px; width: 175px; height: auto; z-index: 5; }
-.lTrack { position: absolute; left: 0; top: 122px; width: 1280px; height: 3px; background: #f1e2cf; z-index: 3; }
-.lFill  { height: 100%; background: #E9A563; transition: width 0.45s ease; }
+.loadLogo { position: absolute; left: 50px; top: 0; width: 75px; height: auto; z-index: 5; }
+.loadTrack { position: absolute; left: 0; top: 67px; width: 1307px; height: 2px; background: #fdf3e9; }
+.loadFill { position: absolute; left: 0; top: 66px; height: 3px; background: #e9a563; border-radius: 2px; transition: width .5s ease; }
 
-.lScene { position: absolute; left: 640px; top: 203px; width: 588px; height: 581px; object-fit: contain; z-index: 1; pointer-events: none; animation: lFade 0.6s ease 0.1s both; }
-
-.lNote {
-  position: absolute; left: 60px; top: 163px;
-  background: #f8e1c0; border-radius: 10px; padding: 9px 24px;
-  font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #6b4e3d;
-  z-index: 3;
+.loadNote {
+  position: absolute; left: 60px; top: 163px; width: 786px; box-sizing: border-box; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  background: #f8e1c0; border-radius: 10px;
+  font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #634938;
 }
-
-.lTitle {
-  position: absolute; left: 71px; top: 258px; width: 660px; margin: 0;
+.loadScene {
+  position: absolute; left: 694px; top: 153px; width: 563px; height: 563px; object-fit: contain;
+  animation: lFade .6s ease .1s both;
+}
+.loadTitle {
+  position: absolute; left: 71px; top: 263px; width: 659px; margin: 0;
   font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 40px; color: #634938;
-  z-index: 3;
 }
-
-.lSteps { position: absolute; left: 71px; top: 372px; width: 660px; margin: 0; padding: 0; list-style: none; z-index: 3; }
-.lStep {
+.loadSteps { position: absolute; left: 71px; top: 375px; width: 659px; margin: 0; padding: 0; list-style: none; }
+.loadStep {
   height: 46px; font-family: 'Manrope', Arial, sans-serif; font-size: 20px; color: #9e7d68;
-  opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
+  opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .4s ease, color .4s ease;
 }
-.lStep.visible { opacity: 1; transform: translateY(0); }
-.lStep.done { color: #634938; }
+.loadStep.visible { opacity: 1; transform: translateY(0); }
+.loadStep.done { color: #634938; }
 
-.lBarTrack {
-  position: absolute; left: 71px; top: 651px; width: 513px; height: 34px;
-  background: #f4e6d4; border-radius: 17px; overflow: hidden; z-index: 3;
-}
-.lBarFill { height: 100%; background: #E9A563; border-radius: 17px; transition: width 0.6s ease; }
-.lPercent {
-  position: absolute; left: 600px; top: 655px; font-family: 'Manrope', Arial, sans-serif;
-  font-size: 20px; font-weight: 600; color: #634938; z-index: 3;
-}
+.loadBarTrack { position: absolute; left: 71px; top: 651px; width: 513px; height: 34px; background: #fdd59d; border-radius: 17px; overflow: hidden; }
+.loadBarFill { height: 100%; background: #e9a563; border-radius: 17px; transition: width .5s ease; }
+.loadPercent { position: absolute; left: 610px; top: 654px; font-family: 'Manrope', Arial, sans-serif; font-size: 20px; font-weight: 600; color: #634938; }
