@@ -44,6 +44,8 @@ verified directly and continuously, not assumed.
 
 **Linked quality requirement tests:** [QRT-001](quality-requirement-tests.md#qrt-001-allergen-exclusion)
 
+**Related ADRs:** [ADR-001](architecture/adr/ADR-001-rule-based-engine-llm-justification-only.md) — deterministic rule-based selection keeps the allergen exclusion in testable application code, with the LLM unable to alter selection.
+
 -----
 
 ## QR-002: Robust recommendation across the valid input space
@@ -69,6 +71,8 @@ that the frontend cannot render.
 
 **Linked quality requirement tests:** [QRT-002](quality-requirement-tests.md#qrt-002-recommendation-input-space-robustness)
 
+**Related ADRs:** [ADR-002](architecture/adr/ADR-002-mongodb-atlas-datastore.md) — the full catalog is cheap to load and filter in memory; [ADR-003](architecture/adr/ADR-003-discrete-budget-segments-nearest-fallback.md) — segment-priority fallback degrades gracefully across the input space instead of failing on sparse combinations.
+
 -----
 
 ## QR-003: Recommendation response time
@@ -89,3 +93,5 @@ deployment/network variance, so that performance regressions in the selection
 logic are caught in CI before they reach the customer-facing deployment.
 
 **Linked quality requirement tests:** [QRT-003](quality-requirement-tests.md#qrt-003-recommend-latency)
+
+**Related ADRs:** [ADR-001](architecture/adr/ADR-001-rule-based-engine-llm-justification-only.md) — keeping selection deterministic and the variable-latency LLM call optional and off the critical path bounds the engine's own computation cost.

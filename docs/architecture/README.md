@@ -251,11 +251,28 @@ flow to reason about correctness, robustness, and latency.
 
 ## Architecture Decision Records (ADRs)
 
-_To be added in PBI-308. Planned records, each linked to the quality
-requirement(s) it addresses:_
+The maintained ADR set lives in [`adr/`](adr/). Each record is `Accepted` and
+addresses one or more quality requirements.
 
-- _**ADR-001** — Rule-based selection engine with the LLM as a justification-only
-  layer (→ QR-001, QR-003)._
-- _**ADR-002** — MongoDB Atlas as the product datastore (→ QR-002)._
-- _**ADR-003** — Budget handled as discrete segments with nearest-segment
-  fallback (→ QR-002)._
+| ADR | Decision | Quality requirements |
+|-----|----------|----------------------|
+| [ADR-001](adr/ADR-001-rule-based-engine-llm-justification-only.md) | Rule-based selection engine with the LLM as a justification-only layer | [QR-001](../quality-requirements.md#qr-001-allergen-safe-recommendations), [QR-003](../quality-requirements.md#qr-003-recommendation-response-time) |
+| [ADR-002](adr/ADR-002-mongodb-atlas-datastore.md) | MongoDB Atlas as the product datastore | [QR-002](../quality-requirements.md#qr-002-robust-recommendation-across-the-valid-input-space) |
+| [ADR-003](adr/ADR-003-discrete-budget-segments-nearest-fallback.md) | Budget as discrete segments with nearest-segment fallback | [QR-002](../quality-requirements.md#qr-002-robust-recommendation-across-the-valid-input-space) |
+
+### How the decisions fit the architecture
+
+These three decisions explain the shape of the system shown in the views above:
+
+- **ADR-001** is why the static view draws the LLM as a separate, optional
+  component hanging off the justification step rather than inside the engine,
+  and why the dynamic view puts the LLM call in an `opt` block off the critical
+  path. Keeping selection deterministic is what makes QR-001 (allergen
+  correctness) testable and QR-003 (latency) achievable.
+- **ADR-002** is why the static and deployment views show a single managed
+  datastore (MongoDB Atlas) reached through the Motor data-access component, and
+  why the allergen filter sits in application code rather than in the query.
+- **ADR-003** is why the engine does per-step, segment-priority selection with
+  substitution notes instead of price-band enforcement — the mechanism behind
+  the QR-002 graceful-degradation behaviour. Its known tradeoff (assembled total
+  vs. displayed budget range) is tracked as PBI-302.
