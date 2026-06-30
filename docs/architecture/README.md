@@ -187,10 +187,67 @@ flow to reason about correctness, robustness, and latency.
 
 ## Deployment View
 
-_To be added in PBI-307: the runtime topology — the React build and the FastAPI
-service on Railway, MongoDB Atlas as the datastore, the external LLM provider,
-and the customer-facing access path — with the rationale for the deployment
-model._
+![KOYASH deployment diagram](deployment-view/deployment-diagram.svg)
+
+> Source: [`deployment-view/deployment-diagram.puml`](deployment-view/deployment-diagram.puml)
+> (PlantUML). The SVG is the rendered form of that source.
+
+### What the deployment shows
+
+- **Two services on the Railway platform.** The **frontend service** is the
+  React + Vite app built to a static bundle and served via `vite preview`
+  (bound to `0.0.0.0` on Railway's `PORT`). The **backend service** is the
+  FastAPI app packaged as a Docker image (`python:3.12-slim`, Uvicorn, listening
+  on Railway's `PORT`).
+- **Customer-facing access path.** The user's browser loads the SPA from the
+  frontend service over HTTPS, then calls the backend directly over HTTPS
+  (`POST /recommend`, `GET /products`) — CORS on the backend allows the
+  frontend origin. The backend URL is wired into the frontend at build time via
+  `VITE_API_URL`.
+- **Stateful infrastructure.** Product data lives in **MongoDB Atlas** (managed
+  cloud), reached from the backend over the MongoDB wire protocol (TLS,
+  `mongodb+srv`) via the async Motor driver.
+- **External service (MVP v2).** The backend calls the external **LLM provider**
+  (OpenAI-compatible, gpt-4o-mini) over HTTPS REST, using an API key supplied
+  through the environment.
+- **Offline data pipeline.** The `db/` seed scripts run from a developer machine
+  as a one-off to import the catalog into Atlas; they are not part of the
+  deployed runtime or the request path.
+
+### Why this deployment model
+
+- **Railway for both services** keeps the operational surface small for a
+  student team: managed builds and TLS, environment-variable configuration, and
+  a public URL per service, with no separate orchestration to run. The frontend
+  and backend deploy independently, matching their loose HTTP coupling.
+- **MongoDB Atlas** removes the need to operate a database: backups, TLS, and
+  availability are managed, and the connection string is just another secret in
+  the backend environment.
+- **The LLM provider stays external and isolated** to one outbound call from the
+  backend, consistent with ADR-001 — it can be enabled, disabled, or swapped via
+  configuration without touching the deployment topology.
+
+### How it supports or constrains the product
+
+- The browser-to-backend call is a direct cross-origin HTTPS request, so the
+  backend must keep correct CORS and the frontend must be built with the right
+  `VITE_API_URL` for each environment — a deploy-time configuration concern to
+  watch.
+- Atlas and the LLM provider are both off-platform network hops; their latency
+  and availability are outside Railway. This is why
+  [QR-003](../quality-requirements.md#qr-003-recommendation-response-time)
+  is measured in-process (excluding network/Atlas round-trips) and why the LLM
+  call is optional and bypassable
+  ([QR-002](../quality-requirements.md#qr-002-robust-recommendation-across-the-valid-input-space)).
+
+### What to consider when operating it
+
+- Set the backend secrets (`MONGODB_URI`, the LLM API key) and the frontend
+  `VITE_API_URL` per environment; never commit them.
+- Keep the Atlas network access list and the LLM key budget in mind — the key is
+  usage-limited.
+- Both services read `PORT` from Railway; the frontend must keep
+  `allowedHosts` open for the `*.up.railway.app` domain.
 
 ## Architecture Decision Records (ADRs)
 

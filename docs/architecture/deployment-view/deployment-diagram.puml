@@ -1,0 +1,37 @@
+@startuml deployment-diagram
+title KOYASH — Deployment Diagram (deployment view, MVP v2)
+
+skinparam shadowing false
+left to right direction
+
+actor "Customer /\nend user" as user
+
+node "User device\nweb browser" as device
+
+cloud "Railway platform" as railway {
+  node "Frontend service" as fenode {
+    artifact "React + Vite static build\nserved via vite preview\n(host 0.0.0.0, PORT env)" as feart
+  }
+  node "Backend service" as benode {
+    artifact "FastAPI app\nDocker python:3.12-slim\nUvicorn, PORT env" as beart
+  }
+}
+
+cloud "MongoDB Atlas\nmanaged cloud" as atlas {
+  database "koyash database\nproducts collection" as db
+}
+
+cloud "LLM provider\nOpenAI-compatible API\ngpt-4o-mini  <<MVP v2>>" as llm
+
+node "Developer machine\n(offline, one-off)" as dev {
+  artifact "db/ seed scripts" as seed
+}
+
+user --> device
+device --> feart : HTTPS\nload SPA
+device --> beart : HTTPS\nfetch POST /recommend, GET /products
+beart --> db : MongoDB wire protocol (TLS)\nmongodb+srv via Motor
+beart --> llm : HTTPS REST\nAPI key from env  <<MVP v2>>
+seed --> db : offline import\n(PyMongo)
+
+@enduml

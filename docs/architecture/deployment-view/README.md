@@ -3,6 +3,9 @@
 Maintained location for the deployment architecture view (runtime / deployment
 topology).
 
-_Placeholder — the deployment diagram (Railway + MongoDB Atlas + LLM provider +
-customer access path) and its explanation are added in PBI-307. See the
-[architecture index](../README.md)._
+- [`deployment-diagram.puml`](deployment-diagram.puml) — topology of Railway,
+  MongoDB Atlas, and the LLM provider (PlantUML source) ·
+  [rendered SVG](deployment-diagram.svg)
+
+The readable diagram and its explanation live in the
+[architecture index](../README.md#deployment-view).
