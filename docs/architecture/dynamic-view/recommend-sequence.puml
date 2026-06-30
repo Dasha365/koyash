@@ -1,0 +1,50 @@
+@startuml recommend-sequence
+title KOYASH — POST /recommend (dynamic view, MVP v2)
+
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+autonumber
+
+actor "End user" as user
+participant "Frontend\n(Loading.jsx +\nrequest builder)" as fe
+participant "recommend router\nPOST /recommend" as api
+participant "Recommendation\nengine\n(recommend.py)" as engine
+database "MongoDB Atlas\nproducts" as db
+participant "Justification\n(rule-based +\nLLM layer)" as just
+participant "LLM provider\ngpt-4o-mini" as llm
+
+user -> fe : complete questionnaire
+fe -> fe : buildRequest(answers)
+fe -> api : HTTPS POST /recommend\n{budget, vegan, cruelty_free,\nconcerns, allergens,\nminimalism, skin_type}
+
+api -> engine : recommend(request)
+engine -> engine : build Mongo query\n(vegan, cruelty_free)
+engine -> db : find(query)
+db --> engine : matching product docs
+engine -> engine : allergen filter (in Python,\ncase-insensitive) -> pool
+
+loop for each routine step
+  engine -> engine : segment-priority candidates\n(own segment -> nearest)
+  engine -> engine : skin-type preference\n(specific -> "any")
+  engine -> engine : sort by concern match,\nthen price; pick
+end
+
+alt basket is empty
+  engine --> api : raise 422\nNO_PRODUCTS_AVAILABLE
+  api --> fe : 422 {error.code}
+  fe --> user : "ничего не нашлось"
+else basket has items
+  engine -> just : build justification per item
+  opt LLM available (MVP v2, ADR-001)
+    just -> llm : HTTPS REST\n(already-selected product +\nuser context)
+    llm --> just : short worded explanation
+  end
+  note right of just : LLM never changes selection;\nfalls back to rule-based text\nif unavailable
+  just --> engine : justifications
+  engine -> engine : sort bag by order_index;\ncompute total, notes, empty_steps
+  engine --> api : RecommendResponse\n{bag, meta}
+  api --> fe : 200 RecommendResponse (JSON)
+  fe --> user : render cosmetic bag
+end
+
+@enduml

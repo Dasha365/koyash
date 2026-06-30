@@ -122,12 +122,68 @@ talk to, and the protocols between them.
 
 ---
 
-## Dynamic View
+## Dynamic View — `POST /recommend` Sequence
 
-_To be added in PBI-306: a sequence diagram of the `POST /recommend` flow
-(questionnaire → request builder → API → engine → filters → segment fallback →
-basket assembly → justification → response), with an explanation of the scenario
-and the quality requirements it helps reason about._
+![POST /recommend sequence diagram](dynamic-view/recommend-sequence.svg)
+
+> Source: [`dynamic-view/recommend-sequence.puml`](dynamic-view/recommend-sequence.puml)
+> (PlantUML). The SVG is the rendered form of that source.
+
+### What scenario this represents
+
+This is the core request: a user finishes the questionnaire and the system
+assembles their cosmetic bag. The frontend builds the `/recommend` payload and
+calls the backend over HTTPS; the recommendation engine queries MongoDB Atlas,
+applies the filters, selects one product per routine step, builds the
+justification, and returns the bag — or returns a structured `422` when no
+products survive the filters.
+
+### Why it matters to the product
+
+`POST /recommend` is the moment of value in KOYASH: everything else exists to
+get the user to this response. It is also the most complex flow — it spans the
+frontend, the API, the in-process engine, the database, and (in MVP v2) the
+external LLM provider, and it has to behave correctly both when products are
+found and when the filter combination leaves nothing. That makes it the right
+flow to reason about correctness, robustness, and latency.
+
+### What the sequence shows
+
+1. The frontend assembles the request (`buildRequest`) and posts it.
+2. The engine builds the MongoDB query for the two database-side hard filters
+   (vegan, cruelty-free) and fetches matching documents.
+3. The **allergen filter runs in Python** over the result set (case-insensitive)
+   — deliberately in application code, not in the query.
+4. For each routine step the engine picks **segment-priority** candidates
+   (the user's own budget segment first, then the nearest neighbour), applies
+   the **skin-type preference** (specific type, else `any`), and sorts by
+   concern match then price.
+5. If the basket ends up empty, the engine raises `422 NO_PRODUCTS_AVAILABLE`
+   and the frontend shows the "nothing found" state.
+6. Otherwise each item gets a justification. In MVP v2 the **LLM layer
+   (ADR-001)** optionally enriches the wording via the external provider, and
+   **falls back to the rule-based text if the LLM is unavailable** — the LLM
+   never changes which products were selected.
+7. The engine sorts the bag by routine order, computes the total and notes, and
+   returns `RecommendResponse`, which the frontend renders.
+
+### Decisions and quality requirements it helps reason about
+
+- **Integration boundaries.** The diagram makes the two external dependencies
+  explicit — MongoDB Atlas on the critical path, and the LLM provider as an
+  _optional_ side-branch off the justification step. This is exactly the
+  boundary **ADR-001** draws: selection is deterministic and local; the LLM is
+  additive and bypassable.
+- **[QR-001](../quality-requirements.md#qr-001-allergen-safe-recommendations)
+  (allergen correctness).** The allergen filter is a distinct, in-process step
+  (step 3), which is what makes it directly testable.
+- **[QR-002](../quality-requirements.md#qr-002-robust-recommendation-across-the-valid-input-space)
+  (fault tolerance).** The explicit empty-basket `alt` branch shows the graceful
+  `422` path instead of a crash or malformed body.
+- **[QR-003](../quality-requirements.md#qr-003-recommendation-response-time)
+  (time behaviour).** The core path is one database round-trip plus in-process
+  work; the only variable-latency call (the LLM) sits in an `opt` block off the
+  critical selection path.
 
 ## Deployment View
 

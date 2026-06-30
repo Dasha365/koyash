@@ -3,5 +3,8 @@
 Maintained location for the dynamic architecture view (runtime behaviour /
 sequence diagrams).
 
-_Placeholder — the `POST /recommend` sequence diagram and its explanation are
-added in PBI-306. See the [architecture index](../README.md)._
+- [`recommend-sequence.puml`](recommend-sequence.puml) — `POST /recommend` flow
+  (PlantUML source) · [rendered SVG](recommend-sequence.svg)
+
+The readable diagram and its explanation live in the
+[architecture index](../README.md#dynamic-view--post-recommend-sequence).
