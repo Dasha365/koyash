@@ -1,0 +1,53 @@
+@startuml component-diagram
+title KOYASH — Component Diagram (static view, MVP v2)
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam defaultTextAlignment center
+left to right direction
+
+actor "End user\n(browser)" as user
+
+package "Frontend — React + Vite SPA\n(static build, served on Railway)" as fe {
+  [Landing page] as landing
+  [Questionnaire flows\nstorytelling / short /\nskin-type mini-quiz] as quiz
+  [Request builder\nquizConfig.buildRequest] as reqb
+  [Results view\ncosmetic bag] as results
+}
+
+package "Backend — FastAPI service\n(Uvicorn, on Railway)" as be {
+  [HTTP API + CORS\nmain.py · /health] as api
+  [recommend router\nPOST /recommend] as recrouter
+  [products router\nGET /products] as prodrouter
+  [Recommendation engine\nhard filters · segment-priority\nselection · skin preference ·\nbasket assembly] as engine
+  [Rule-based justification\nbuilder] as just
+  [LLM justification layer\n<<MVP v2 · ADR-001>>] as llm
+  [Data access\nMotor async client] as data
+  [Config / settings\nenv · pydantic] as cfg
+}
+
+database "MongoDB Atlas\nproducts collection" as mongo
+cloud "LLM provider\nOpenAI-compatible\ngpt-4o-mini" as llmapi
+component "Data seed scripts\ndb/ · offline import" as seed
+
+user --> landing : HTTPS
+user --> quiz : HTTPS
+quiz --> reqb
+reqb --> recrouter : HTTPS\nPOST /recommend (JSON)
+recrouter --> results : RecommendResponse (JSON)
+results --> user : renders bag
+
+api ..> recrouter
+api ..> prodrouter
+recrouter --> engine
+engine --> just
+just ..> llm : <<planned>>\nenrich text
+engine --> data
+prodrouter --> data
+data --> mongo : MongoDB wire\nprotocol (TLS)
+llm --> llmapi : HTTPS REST
+recrouter ..> cfg
+data ..> cfg
+seed --> mongo : offline import\n(PyMongo)
+
+@enduml
