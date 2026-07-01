@@ -73,26 +73,29 @@ We use a trunk-based, short-lived-branch workflow around a protected `main`.
 
 ```mermaid
 gitGraph
-   commit id: "main"
-   branch 106-architecture-static-view
-   commit id: "static view"
+   commit id: "setup"
+   branch static-view
+   commit id: "component diagram"
    checkout main
-   merge 106-architecture-static-view tag: "PR #114"
-   branch 107-architecture-dynamic-view
+   merge static-view tag: "PR #114"
+   branch dynamic-view
    commit id: "sequence diagram"
    checkout main
-   merge 107-architecture-dynamic-view tag: "PR #115"
-   branch 102-skin-type-mini-quiz
-   commit id: "mini-quiz WIP"
+   merge dynamic-view tag: "PR #115"
+   branch mini-quiz
+   commit id: "implement"
    commit id: "review fixes"
    checkout main
-   merge 102-skin-type-mini-quiz tag: "PR #1xx"
+   merge mini-quiz tag: "PR"
 ```
 
-The diagram shows how we actually work: `main` is the single integration branch
-and always stays releasable. For each issue we cut a short-lived branch named
-after that issue, do the work in one or more commits, open a PR, and merge it
-back into `main` with a **merge commit** (the labelled merge points) once it is
+The branch names are shortened here for readability; in practice each branch is
+prefixed with its issue number (`<issue-number>-short-description`, e.g.
+`106-architecture-static-view`). The diagram shows how we actually work: `main`
+is the single integration branch and always stays releasable. For each issue we
+cut a short-lived branch named after that issue, do the work in one or more
+commits, open a PR, and merge it back into `main` with a **merge commit** (the
+labelled merge points) once it is
 reviewed and CI is green. Branches are focused on one issue and do not live long
 or accumulate unrelated work; `main` only ever advances through reviewed merges,
 never through direct commits.
