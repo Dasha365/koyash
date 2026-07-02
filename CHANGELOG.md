@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Budget step in both questionnaires (storytelling and short) now describes each budget as a
+  tier with an approximate per-product price and an approximate whole-set total (e.g.
+  "Бюджетно · до 1 000 ₽/шт · набор ≈ 4 000 ₽") instead of exact basket ranges (3 500 / 8 000 ₽)
+  that the assembled bag rarely matched. The recommendation/selection logic is unchanged.
+- Results screen now notes that prices are approximate and may differ in store — the current
+  price is available via each product's link.
+
 ## [1.1.0] - 2026-06-28
 
 ### Added
