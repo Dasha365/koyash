@@ -23,6 +23,9 @@ const STEP_IMG = {
 };
 const bagFor = (p) => (p.image_url ? p.image_url : STEP_IMG[p.routine_step] || bagNotFound);
 
+const PRICE_NOTE =
+  'Цены ориентировочные и могут отличаться в магазине — актуальная цена по ссылке на товар.';
+
 // Russian step labels (capitalised + lowercase variant for the step line)
 const STEP_RU = {
   cleanse: 'Очищение',
@@ -156,9 +159,7 @@ export default function Results() {
         <div className="rTotal">
           Сумма: <span className="sum">{fmt(meta.total_price_rub)} ₽</span>
         </div>
-        <p className="rTotalNote">
-          {'Цены ориентировочные и могут отличаться в магазине — актуальная цена по ссылке на товар.'}
-        </p>
+        <p className="rTotalNote">{PRICE_NOTE}</p>
         {meta.note && <p className="rMetaNote">{meta.note}</p>}
 
         <div className="rActions">
